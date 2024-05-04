@@ -20,10 +20,6 @@ CREATE TABLE `OrderItems` (
 
 ALTER TABLE `OrderItems` ADD CONSTRAINT `OrderItems_orderId_fkey` FOREIGN KEY (`orderId`) REFERENCES `Order`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
-DELETE FROM OrderItems;
-DELETE FROM Order;
-
-
 INSERT INTO `Order` (id, status, customerId, price) VALUES
 ('order-1', 'CONCLUDED', 'cust-1', 100),
 ('order-2', 'PROCESSING', 'cust-2', 50),

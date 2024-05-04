@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
-import { PrismaCategoriesRepository } from '../../../../@core/category/repositories/prisma-categories-repository';
-import { ICategoriesRepository } from '../../../../@core/category/repositories/icategory.repository';
+import { IOrdersRepository } from '../../../../../src/@core/order/repositories/iorder.repository';
+import { PrismaOrdersRepository } from '../../../../../src/@core/order/repositories/prisma-orders-repository';
 
 @Module({
-  exports: [ICategoriesRepository],
+  exports: [IOrdersRepository],
   imports: [ConfigModule],
   providers: [
     PrismaService,
     {
-      provide: ICategoriesRepository,
-      useClass: PrismaCategoriesRepository,
+      provide: IOrdersRepository,
+      useClass: PrismaOrdersRepository,
     },
   ],
 })

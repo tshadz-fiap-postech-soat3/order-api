@@ -36,8 +36,8 @@ export class OrderItemsController implements IOrderItemsController {
     return await this.orderItemsService.findOne(category);
   }
 
-  async update(id: string, updateProductDto: UpdateOrderItemDto) {
-    return await this.orderItemsService.update(id, updateProductDto);
+  async update(id: string, updateOrderItemDto: UpdateOrderItemDto) {
+    return await this.orderItemsService.update(id, updateOrderItemDto);
   }
 
   async remove(id: string) {

@@ -1,15 +1,15 @@
 import { Result } from '../application/result/result';
-import { UpdateProductDto } from '../products/entities/update-product.dto';
 import { CreateOrderItemDto } from './entitites/create-order-item.dto';
 import { OrderItemEntity } from './entitites/order-item';
+import { UpdateOrderItemDto } from './entitites/update-order-item.dto';
 
 export abstract class IOrderItemsService {
   public abstract create(
-    product: CreateOrderItemDto[],
+    orderItem: CreateOrderItemDto[],
   ): Promise<Result<OrderItemEntity[]>>;
   public abstract update(
     id: string,
-    product: UpdateProductDto,
+    orderItem: UpdateOrderItemDto,
   ): Promise<Result<OrderItemEntity>>;
   public abstract findOne(category: string): Promise<Result<OrderItemEntity>>;
   public abstract findOne(name: string): Promise<Result<OrderItemEntity>>;
