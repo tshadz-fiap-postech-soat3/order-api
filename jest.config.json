@@ -13,5 +13,8 @@
   "collectCoverageFrom": [
     "**/*.(t|j)s"
   ],
-  "coverageDirectory": "coverage"
+  "coverageDirectory": "coverage",
+  "coveragePathIgnorePatterns": [
+    "/test/"
+  ]
 }
