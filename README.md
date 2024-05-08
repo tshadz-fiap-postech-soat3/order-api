@@ -2,6 +2,8 @@
 
 Tech Challenge - Software Architecture
 
+[![Coverage](https://img.shields.io/endpoint?url=https://sonarcloud.io/api/project_badges/measure?project=tshadz-fiap-postech-soat3_order-api&metric=coverage)](https://sonarcloud.io/dashboard?id=tshadz-fiap-postech-soat3_order-api)
+
 Acesse a [Wiki do Projeto](https://github.com/tshadz/soat3-tech-chalenge/wiki) para mais informações a respeito dos:
 
 * Requisitos técnicos (business)
