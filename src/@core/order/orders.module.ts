@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { IOrdersRepository } from './repositories/iorder.repository';
+import { IOrdersRepository } from './order-item/repositories/iorder.repository';
 import { PrismaService } from '../../external/driven/infra/database/prisma.service';
 import { PrismaOrdersRepository } from './repositories/prisma-orders-repository';
 import { OrdersService } from './orders.service';

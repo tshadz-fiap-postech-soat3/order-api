@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { OrderEntity, OrderStatus } from './order';
+import { OrderEntity, OrderStatus } from '../entitites/order';
 
 export class CreateOrderDto extends OrderEntity {
   @ApiProperty({ example: 'order-7' })

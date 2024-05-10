@@ -1,8 +1,8 @@
 import { ApplicationResult } from '../../application/applicationResult/application-result';
 import { Result } from '../../application/result/result';
-import { CreateOrderDto } from '../entitites/create-order.dto';
+import { CreateOrderDto } from '../dtos/create-order.dto';
 import { OrderEntity } from '../entitites/order';
-import { UpdateOrderDto } from '../entitites/update-order.dto';
+import { UpdateOrderDto } from '../dtos/update-order.dto';
 
 export abstract class IOrdersController {
   public abstract create(

@@ -1,5 +1,5 @@
-import { CreateOrderItemDto } from '../entitites/create-order-item.dto';
-import { UpdateOrderItemDto } from '../entitites/update-order-item.dto';
+import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
+import { UpdateOrderItemDto } from '../dtos/order-item/update-order-item.dto';
 import { OrderItemEntity } from '../entitites/order-item';
 
 export abstract class IOrderItemsRepository {

@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IOrderItemsRepository } from './repositories/iorder-items.repository';
-import { CreateOrderItemDto } from './entitites/create-order-item.dto';
-import { UpdateOrderItemDto } from './entitites/update-order-item.dto';
-import { IOrderItemsService } from './iorderItems.service';
-import { ResultError } from '../application/result/result-error';
-import { ResultSuccess } from '../application/result/result-success';
+import { CreateOrderItemDto } from './dtos/order-item/create-order-item.dto';
+import { UpdateOrderItemDto } from './dtos/order-item/update-order-item.dto';
+import { OrderItemsServiceInterface } from './order-items-service.interface';
+import { ResultError } from '../../application/result/result-error';
+import { ResultSuccess } from '../../application/result/result-success';
 import { OrderItemEntity } from './entitites/order-item';
 
 @Injectable()
-export class OrderItemsService implements IOrderItemsService {
+export class OrderItemsService implements OrderItemsServiceInterface {
   constructor(
     @Inject(IOrderItemsRepository)
     private readonly orderItemsRepository: IOrderItemsRepository,

@@ -3,8 +3,8 @@ import { ApplicationResult } from '../../application/applicationResult/applicati
 import { ApplicationResultEvents } from '../../application/applicationResult/application-result-events';
 import { ResultStatus } from '../../application/result/result-status';
 import { IOrdersController } from './iorders-controller';
-import { CreateOrderDto } from '../entitites/create-order.dto';
-import { UpdateOrderDto } from '../entitites/update-order.dto';
+import { CreateOrderDto } from '../dtos/create-order.dto';
+import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { IOrdersService } from '../iorders.service';
 import { OrderEntity } from '../entitites/order';
 
