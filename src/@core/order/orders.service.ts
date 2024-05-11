@@ -17,41 +17,31 @@ export class OrdersService implements IOrdersService {
 
   async create(createOrderDto: CreateOrderDto) {
     const result = await this.ordersRepository.insert(createOrderDto);
-    if (!result) {
-      return new ResultError('Not able to create the order');
-    }
+    if (!result) return new ResultError('Not able to create the order');
     return new ResultSuccess(result);
   }
 
   async findAll() {
     const result = await this.ordersRepository.findAll();
-    if (!result) {
-      return new ResultError('order not exist');
-    }
+    if (!result) return new ResultError('order not exist');
     return new ResultSuccess(result);
   }
 
   async findAllByStatus(status: OrderStatus) {
     const result = await this.ordersRepository.findAllByStatus(status);
-    if (!result) {
-      return new ResultError('order not exist');
-    }
+    if (!result) return new ResultError('order not exist');
     return new ResultSuccess(result);
   }
 
   async findOne(id: string) {
     const result = await this.ordersRepository.findById(id);
-    if (!result) {
-      return new ResultError('order not exist');
-    }
+    if (!result) return new ResultError('order not exist');
     return new ResultSuccess(result);
   }
 
   async update(id: string, updateOrderDto: UpdateOrderDto) {
     const result = await this.ordersRepository.update(id, updateOrderDto);
-    if (!result) {
-      return new ResultError('Not able to update the order');
-    }
+    if (!result) return new ResultError('Not able to update the order');
     return new ResultSuccess(result);
   }
 
