@@ -1,4 +1,4 @@
-import { ApplicationResult } from '../../application/applicationResult/application-result';
+import { ApplicationResult } from '../../application/application-result/application-result';
 import { Result } from '../../application/result/result';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { OrderEntity } from '../entitites/order';
@@ -7,11 +7,11 @@ import { UpdateOrderDto } from '../dtos/update-order.dto';
 export abstract class IOrdersController {
   public abstract create(
     order: CreateOrderDto,
-  ): Promise<ApplicationResult<any>>;
+  ): Promise<ApplicationResult<OrderEntity | string>>;
   public abstract update(
     id: string,
     order: UpdateOrderDto,
-  ): Promise<ApplicationResult<any>>;
+  ): Promise<ApplicationResult<OrderEntity | string>>;
   public abstract findOne(
     name: string,
   ): Promise<ApplicationResult<OrderEntity | string>>;
