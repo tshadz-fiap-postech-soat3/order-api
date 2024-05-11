@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { IOrdersRepository } from '../order-item/repositories/iorder.repository';
-import { PrismaService } from '../../../external/driven/infra/database/prisma.service';
-import { CreateOrderDto } from '../dtos/create-order.dto';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
-import { OrderEntity, OrderStatus } from '../entitites/order';
+import { IOrdersRepository } from './order-repository.interface';
+import { PrismaService } from '../../../../external/driven/infra/database/prisma.service';
+import { CreateOrderDto } from '../../dtos/create-order.dto';
+import { UpdateOrderDto } from '../../dtos/update-order.dto';
+import { OrderEntity, OrderStatus } from '../../entitites/order';
 
 @Injectable()
-export class PrismaOrdersRepository implements IOrdersRepository {
+export class OrderRepository implements IOrdersRepository {
   constructor(private prisma: PrismaService) {}
 
   async insert(order: CreateOrderDto): Promise<OrderEntity> {

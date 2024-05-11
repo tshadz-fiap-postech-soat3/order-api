@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
-import { IOrdersRepository } from '../../../../@core/order/order-item/repositories/iorder.repository';
-import { PrismaOrdersRepository } from '../../../../../src/@core/order/repositories/prisma-orders-repository';
+import { IOrdersRepository } from '../../../../@core/order/order-item/repositories/order-repository.interface';
+import { OrderRepository } from '../../../../@core/order/order-item/repositories/order-repository';
 
 @Module({
   exports: [IOrdersRepository],
@@ -11,7 +11,7 @@ import { PrismaOrdersRepository } from '../../../../../src/@core/order/repositor
     PrismaService,
     {
       provide: IOrdersRepository,
-      useClass: PrismaOrdersRepository,
+      useClass: OrderRepository,
     },
   ],
 })

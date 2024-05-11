@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { IOrdersRepository } from '../../../src/@core/order/order-item/repositories/iorder.repository';
+import { IOrdersRepository } from '../../../src/@core/order/order-item/repositories/order-repository.interface';
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
-import { PrismaOrdersRepository } from '../../../src/@core/order/repositories/prisma-orders-repository';
+import { OrderRepository } from '../../../src/@core/order/order-item/repositories/order-repository';
 import { OrdersService } from '../../../src/@core/order/orders.service';
 
 describe('OrdersService', () => {
@@ -13,7 +13,7 @@ describe('OrdersService', () => {
         OrdersService,
         {
           provide: IOrdersRepository,
-          useClass: PrismaOrdersRepository,
+          useClass: OrderRepository,
         },
         PrismaService,
       ],
