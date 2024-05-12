@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IOrdersRepository } from './order-item/repositories/order-repository.interface';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateOrderDto } from './dtos/update-order.dto';
-import { OrderStatus } from './entitites/order';
+import { OrderStatus } from './entitites/order.entity';
 import { IOrdersService } from './iorders.service';
 import { ResultError } from '../application/result/result-error';
 import { ResultSuccess } from '../application/result/result-success';

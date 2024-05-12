@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { OrderStatus } from "../src/@core/order/entitites/order";
+import { OrderStatus } from "../src/@core/order/entitites/order.entity";
 
 const prisma = new PrismaClient()
 

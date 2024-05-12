@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { OrderStatus } from '../../@core/order/entitites/order';
+import { OrderStatus } from '../../@core/order/entitites/order.entity';
 import { CreateOrderDto } from '../../@core/order/dtos/create-order.dto';
 import { UpdateOrderDto } from '../../@core/order/dtos/update-order.dto';
 import { IOrdersController } from '../../@core/order/controller/iorders-controller';
