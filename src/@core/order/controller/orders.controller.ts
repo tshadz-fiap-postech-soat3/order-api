@@ -6,23 +6,29 @@ import { IOrdersController } from './iorders-controller';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { IOrdersService } from '../iorders.service';
-import { OrderEntity } from '../entitites/order';
+import { OrderEntity } from '../entitites/order.entity';
 import {
   CreateOrderApplicationResultError
 } from '../../application/application-result-error/create-order-error';
 import { CreateOrderApplicationResultSuccess } from '../../application/application-result-success/create-order-success';
+import { ProductEntity } from '../entitites/product.entity';
 
 @Injectable()
 export class OrdersController implements IOrdersController {
   constructor(
     @Inject(IOrdersService)
     private ordersService: IOrdersService,
-  ) {}
+  ) {
+  }
 
   async create(createOrderDto: CreateOrderDto): Promise<ApplicationResult<string | OrderEntity>> {
     const createdOrder = await this.ordersService.create(createOrderDto);
     if (createdOrder.status === ResultStatus.ERROR) return new CreateOrderApplicationResultError();
     return new CreateOrderApplicationResultSuccess( createdOrder.data);
+  }
+
+  public calculateOrder(products: ProductEntity[]): void {
+    throw new Error('Method not implemented.');
   }
 
   async findAll() {
