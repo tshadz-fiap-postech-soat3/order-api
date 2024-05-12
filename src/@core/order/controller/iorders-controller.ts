@@ -4,6 +4,9 @@ import { CreateOrderDto } from '../dtos/create-order.dto';
 import { OrderEntity } from '../entitites/order.entity';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { ProductEntity } from '../entitites/product.entity';
+import {
+  CalculateOrderApplicationSuccess
+} from '../../application/application-result-success/calculate-order-response';
 
 export abstract class IOrdersController {
   public abstract create(
@@ -13,7 +16,7 @@ export abstract class IOrdersController {
     id: string,
     order: UpdateOrderDto,
   ): Promise<ApplicationResult<OrderEntity | string>>;
-  public abstract calculateOrder(products: ProductEntity[]) : number;
+  public abstract calculateOrder(products: ProductEntity[]) : Promise<ApplicationResult<number>>;
   public abstract findOne(
     name: string,
   ): Promise<ApplicationResult<OrderEntity | string>>;

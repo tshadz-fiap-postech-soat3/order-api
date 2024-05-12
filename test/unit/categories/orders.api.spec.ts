@@ -5,7 +5,7 @@ import { IOrdersRepository } from '../../../src/@core/order/order-item/repositor
 import { OrderRepository } from '../../../src/@core/order/order-item/repositories/order-repository';
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
 import { OrdersController } from '../../../src/@core/order/controller/orders.controller';
-import { IOrdersService } from '../../../src/@core/order/iorders.service';
+import { OrderServiceInterface } from '../../../src/@core/order/services/order-service.interface';
 import { IOrdersController } from '../../../src/@core/order/controller/iorders-controller';
 
 describe('OrdersApi', () => {
@@ -20,7 +20,7 @@ describe('OrdersApi', () => {
           useClass: OrdersController,
         },
         {
-          provide: IOrdersService,
+          provide: OrderServiceInterface,
           useClass: OrdersService,
         },
         {

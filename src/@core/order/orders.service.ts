@@ -3,13 +3,13 @@ import { IOrdersRepository } from './order-item/repositories/order-repository.in
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateOrderDto } from './dtos/update-order.dto';
 import { OrderStatus } from './entitites/order.entity';
-import { IOrdersService } from './iorders.service';
+import { IOrderService } from './services/order-service.interface';
 import { ResultError } from '../application/result/result-error';
 import { ResultSuccess } from '../application/result/result-success';
 
 
 @Injectable()
-export class OrdersService implements IOrdersService {
+export class OrdersService implements IOrderService {
   constructor(
     @Inject(IOrdersRepository)
     private ordersRepository: IOrdersRepository,

@@ -1,9 +1,9 @@
-import { Result } from '../application/result/result';
-import { CreateOrderDto } from './dtos/create-order.dto';
-import { OrderEntity } from './entitites/order.entity';
-import { UpdateOrderDto } from './dtos/update-order.dto';
+import { Result } from '../../application/result/result';
+import { CreateOrderDto } from '../dtos/create-order.dto';
+import { OrderEntity } from '../entitites/order.entity';
+import { UpdateOrderDto } from '../dtos/update-order.dto';
 
-export abstract class IOrdersService {
+export abstract class IOrderService {
   public abstract create(
     order: CreateOrderDto,
   ): Promise<Result<OrderEntity>>;

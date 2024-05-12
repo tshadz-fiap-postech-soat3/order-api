@@ -12,14 +12,14 @@ import { OrderStatus } from '../../@core/order/entitites/order.entity';
 import { CreateOrderDto } from '../../@core/order/dtos/create-order.dto';
 import { UpdateOrderDto } from '../../@core/order/dtos/update-order.dto';
 import { IOrdersController } from '../../@core/order/controller/iorders-controller';
-import { IOrdersService } from '../../@core/order/iorders.service';
+import { IOrderService } from '../../@core/order/services/order-service.interface';
 
 @ApiTags('order')
 @Controller('orders')
 export class OrdersApi {
   constructor(
     private readonly ordersController: IOrdersController,
-    private readonly ordersService: IOrdersService,
+    private readonly ordersService: IOrderService,
   ) {}
 
   @Post()

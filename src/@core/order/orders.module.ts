@@ -4,7 +4,7 @@ import { PrismaService } from '../../external/driven/infra/database/prisma.servi
 import { OrderRepository } from './order-item/repositories/order-repository';
 import { OrdersService } from './orders.service';
 import { OrdersApi } from '../../external/driver/orders.api';
-import { IOrdersService } from './iorders.service';
+import { OrderServiceInterface } from './services/order-service.interface';
 import { IOrdersController } from './controller/iorders-controller';
 import { OrdersController } from './controller/orders.controller';
 import { OrderRepositoryProvider } from './order-item/repositories/order-repository.provider';
@@ -15,7 +15,7 @@ import { OrderRepositoryProvider } from './order-item/repositories/order-reposit
     OrderRepositoryProvider,
     OrdersService,
     {
-      provide: IOrdersService,
+      provide: OrderServiceInterface,
       useClass: OrdersService,
     },
     OrdersController,
