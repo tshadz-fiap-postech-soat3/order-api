@@ -1,7 +1,7 @@
 import { Result } from '../../application/result/result';
-import { CreateOrderItemDto } from './dtos/order-item/create-order-item.dto';
-import { OrderItemEntity } from './entitites/order-item';
-import { UpdateOrderItemDto } from './dtos/order-item/update-order-item.dto';
+import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
+import { OrderItemEntity } from '../entitites/order-item';
+import { UpdateOrderItemDto } from '../dtos/order-item/update-order-item.dto';
 
 export abstract class OrderItemsServiceInterface {
   public abstract create(
