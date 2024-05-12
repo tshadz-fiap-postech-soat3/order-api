@@ -1,18 +1,17 @@
-export class OrderEntity {
-  id: string;
+import { BaseEntity } from '../../application/model/base-entity';
+
+export class OrderEntity extends BaseEntity{
+
   status: OrderStatus;
   customerId: string;
   price: number;
-  createdAtDate: Date;
-  updatedAtDate: Date;
 
   constructor(id: string, customerId: string, price: number) {
-    this.id = id;
+    super(id)
     this.status = OrderStatus.PAYMENT_DUE;
     this.customerId = customerId;
     this.price = price;
-    this.createdAtDate = new Date();
-    this.updatedAtDate = new Date();
+
   }
 
   isPlaced(): boolean {
