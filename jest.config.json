@@ -15,6 +15,6 @@
   ],
   "coverageDirectory": "coverage",
   "coveragePathIgnorePatterns": [
-    "/test/"
+    "/test/", "<rootDir>/dist/", "prisma", "<rootDir>/src/@core/application/", "\\.module\\.ts$", "main.ts", ".eslintrc.js"
   ]
 }
