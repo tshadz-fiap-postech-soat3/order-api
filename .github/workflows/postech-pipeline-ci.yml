@@ -1,0 +1,14 @@
+name: Pipeline Workflow
+
+on:
+  push:
+    branches: [ "dev-fiap-001" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  call-workflow-branch-ref:
+    if: github.event_name == 'push' && github.ref == 'dev-fiap-001' || github.event_name == 'pull_request' && github.base_ref == 'main'
+    uses: tshadz-fiap-postech-soat3/ci-pipeline/.github/workflows/ci-pipeline.yml@dev-fiap-001
+    secrets: inherit
