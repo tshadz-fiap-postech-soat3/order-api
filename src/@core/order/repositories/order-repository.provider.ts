@@ -1,7 +1,5 @@
-import { IOrderItemsRepository } from './iorder-items.repository';
-import { PrismaOrderItemsRepository } from './prisma-order-items-repository';
 import { ProviderMaker } from '../../application/utils/provider-maker';
+import { IOrderRepository } from './order-repository.interface';
+import { OrderRepository } from './order-repository';
 
-
-
-export const OrderRepositoryProvider = ProviderMaker.make(IOrderItemsRepository, PrismaOrderItemsRepository);
+export const OrderRepositoryProvider = ProviderMaker.make(IOrderRepository, OrderRepository);

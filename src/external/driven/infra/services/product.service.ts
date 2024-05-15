@@ -6,7 +6,7 @@ import { ResultSuccess } from '../../../../@core/application/result/result-succe
 
 @Injectable()
 export class ProductService implements IProductService {
-    async calculateTotalPrice(products: ProductEntity[]): Promise<Result<number>> {
+    async calculateTotalPrice(products: ProductEntity[]): Promise<ResultSuccess<number>> {
         return new ResultSuccess(10)
     }
 
