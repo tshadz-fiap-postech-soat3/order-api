@@ -18,7 +18,7 @@ import {
 } from '../../application/application-result-success/calculate-order-response';
 
 @Injectable()
-export class OrdersController implements IOrdersController {
+export class OrderController implements IOrdersController {
   constructor(
     @Inject(IOrderService)
     private orderService: IOrderService,

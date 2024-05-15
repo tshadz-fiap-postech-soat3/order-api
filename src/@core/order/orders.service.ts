@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IOrdersRepository } from './repositories/order-repository.interface';
+import { IOrderRepository } from './repositories/order-repository.interface';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { UpdateOrderDto } from './dtos/update-order.dto';
 import { OrderStatus } from './entitites/order.entity';
@@ -11,8 +11,8 @@ import { ResultSuccess } from '../application/result/result-success';
 @Injectable()
 export class OrdersService implements IOrderService {
   constructor(
-    @Inject(IOrdersRepository)
-    private ordersRepository: IOrdersRepository,
+    @Inject(IOrderRepository)
+    private ordersRepository: IOrderRepository,
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {

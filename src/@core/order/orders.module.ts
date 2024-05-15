@@ -4,7 +4,7 @@ import { OrdersService } from './orders.service';
 import { OrdersApi } from '../../external/driver/orders.api';
 import { IOrderService } from './services/order-service.interface';
 import { IOrdersController } from './controller/iorders-controller';
-import { OrdersController } from './controller/orders.controller';
+import { OrderController } from './controller/order.controller';
 import { OrderRepositoryProvider } from './repositories/order-repository.provider';
 
 @Module({
@@ -16,10 +16,10 @@ import { OrderRepositoryProvider } from './repositories/order-repository.provide
       provide: IOrderService,
       useClass: OrdersService,
     },
-    OrdersController,
+    OrderController,
     {
       provide: IOrdersController,
-      useClass: OrdersController,
+      useClass: OrderController,
     },
     PrismaService,
   ],

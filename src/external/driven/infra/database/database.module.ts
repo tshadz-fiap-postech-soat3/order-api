@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
-import { IOrdersRepository } from '../../../../@core/order/repositories/order-repository.interface';
+import { IOrderRepository } from '../../../../@core/order/repositories/order-repository.interface';
 import { OrderRepository } from '../../../../@core/order/repositories/order-repository';
 
 @Module({
-  exports: [IOrdersRepository],
+  exports: [IOrderRepository],
   imports: [ConfigModule],
   providers: [
     PrismaService,
     {
-      provide: IOrdersRepository,
+      provide: IOrderRepository,
       useClass: OrderRepository,
     },
   ],
