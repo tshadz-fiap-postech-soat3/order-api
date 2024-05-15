@@ -1,5 +1,5 @@
 import { IStrategy } from 'src/@core/application/model/strategy';
-import { IMakeOrderPaymentStrategy, IOrderStrategy } from '../../application/contracts/order.strategy';
+import { IOrderPlacedStrategy, IOrderStrategy } from '../../application/contracts/order.strategy';
 import { OrderStatus } from '../enums/order-status.enum';
 import { Injectable } from '@nestjs/common';
 import { OrderEntity } from '../entitites/order.entity';
@@ -18,7 +18,7 @@ export class OrderStrategy implements IOrderStrategy {
   };
 
   constructor(
-     private readonly makeOrderPaymentStrategy: IMakeOrderPaymentStrategy<OrderEntity, void>,
+     private readonly makeOrderPaymentStrategy: IOrderPlacedStrategy<OrderEntity, void>,
      private readonly confirmOrderStrategy: IStrategy<OrderEntity, void>,
      private readonly processOrderStrategy: IStrategy<OrderEntity, void>,
      private readonly placeOrderStrategy: IStrategy<OrderEntity, void>,
