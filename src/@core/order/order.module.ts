@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { PrismaService } from '../../external/driven/infra/database/prisma.service';
 import { OrdersApi } from '../../external/driver/orders.api';
-import { OrderRepositoryProvider } from '../../external/driven/infra/database/repositories/order-repository.provider';
 import { InfraModule } from '../../external/driven/infra/infra.module';
 import { OrderServiceProvider } from './services/order-service.provider';
 import { OrderControllerProvider } from './controller/order-controller.provider';
+import { OrderStrategiesModule } from './services/order-status-strategies/order-strategies.module';
 
 @Module({
-  imports: [InfraModule],
+  imports: [InfraModule, OrderStrategiesModule],
   controllers: [OrdersApi],
   providers: [
     OrderServiceProvider,
