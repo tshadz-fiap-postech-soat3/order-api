@@ -6,8 +6,10 @@ import { IOrderService } from './services/order-service.interface';
 import { IOrdersController } from './controller/iorders-controller';
 import { OrderController } from './controller/order.controller';
 import { OrderRepositoryProvider } from './repositories/order-repository.provider';
+import { InfraModule } from '../../external/driven/infra/infra.module';
 
 @Module({
+  imports: [InfraModule],
   controllers: [OrdersApi],
   providers: [
     OrderRepositoryProvider,

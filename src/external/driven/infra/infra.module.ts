@@ -3,8 +3,7 @@ import { Module } from '@nestjs/common';
 
 @Module({
   controllers: [],
-  providers: [
-    ProductServiceProvider
-  ],
+  providers: [ProductServiceProvider],
+  exports: [ProductServiceProvider]
 })
-export class OrdersModule {}
+export class InfraModule {}
