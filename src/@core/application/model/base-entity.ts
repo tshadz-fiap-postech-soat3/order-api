@@ -9,4 +9,8 @@ export class BaseEntity {
 
   createdAtDate: Date;
   updatedAtDate: Date;
+
+  updateDate(){
+    this.updatedAtDate = new Date();
+  }
 }
