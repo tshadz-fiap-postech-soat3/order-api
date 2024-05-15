@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IOrderRepository } from './repositories/order-repository.interface';
-import { CreateOrderDto } from './dtos/create-order.dto';
-import { UpdateOrderDto } from './dtos/update-order.dto';
-import { OrderStatus } from './entitites/order.entity';
-import { IOrderService } from './services/order-service.interface';
-import { ResultError } from '../application/result/result-error';
-import { ResultSuccess } from '../application/result/result-success';
+import { IOrderRepository } from '../repositories/order-repository.interface';
+import { CreateOrderDto } from '../dtos/create-order.dto';
+import { UpdateOrderDto } from '../dtos/update-order.dto';
+import { IOrderService } from './order-service.interface';
+import { ResultError } from '../../application/result/result-error';
+import { ResultSuccess } from '../../application/result/result-success';
+import { OrderStatus } from '../enums/order-status.enum';
 
 
 @Injectable()

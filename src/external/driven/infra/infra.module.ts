@@ -1,9 +1,10 @@
 import { ProductServiceProvider } from './services/product-service.provider';
 import { Module } from '@nestjs/common';
+import { OrderItemRepositoryProvider } from './database/repositories/order-item-repository.provider';
+import { OrderRepository } from './database/repositories/order-repository';
 
 @Module({
-  controllers: [],
-  providers: [ProductServiceProvider],
-  exports: [ProductServiceProvider]
+  providers: [ProductServiceProvider, OrderItemRepositoryProvider, OrderRepository],
+  exports: [ProductServiceProvider, OrderItemRepositoryProvider, OrderRepository]
 })
 export class InfraModule {}

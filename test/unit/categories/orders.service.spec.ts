@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { IOrdersRepository } from '../../../src/@core/order/repositories/order-repository.interface';
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
-import { OrderRepository } from '../../../src/@core/order/repositories/order-repository';
-import { OrderService } from '../../../src/@core/order/order.service';
+import { OrderRepository } from '../../../src/external/driven/infra/database/repositories/order-repository';
+import { OrderService } from '../../../src/@core/order/services/order.service';
 
 describe('OrdersService', () => {
   let service: OrderService;
