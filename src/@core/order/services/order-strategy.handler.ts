@@ -15,7 +15,7 @@ export class OrderStrategy implements IOrderStrategy {
     [OrderStatus.PAYMENT_DUE]: this.orderPlacedStrategy,
     [OrderStatus.PLACED]: this.orderPlacedStrategy,
     [OrderStatus.CONFIRMED]: this.orderConfirmedStrategy,
-    [OrderStatus.PROCESSING]: this.processOrderStrategy,
+    [OrderStatus.PROCESSING]: this.orderInProcessingStrategy,
     [OrderStatus.READY_TO_PICKUP]: this.placeOrderStrategy,
     [OrderStatus.CONCLUDED]: this.finishPaymentStrategy,
     [OrderStatus.CANCELLED]: this.finishPaymentStrategy,
@@ -24,7 +24,7 @@ export class OrderStrategy implements IOrderStrategy {
   constructor(
      private readonly orderPlacedStrategy: IOrderPlacedStrategy<OrderEntity, void>,
      private readonly orderConfirmedStrategy: IOrderConfirmedStrategy<OrderEntity, void>,
-     private readonly processOrderStrategy: IStrategy<OrderEntity, void>,
+     private readonly orderInProcessingStrategy: IOrderInProcessingStrategy<OrderEntity, void>,
      private readonly placeOrderStrategy: IStrategy<OrderEntity, void>,
      private readonly finishPaymentStrategy: IStrategy<OrderEntity, void>) {
   }
