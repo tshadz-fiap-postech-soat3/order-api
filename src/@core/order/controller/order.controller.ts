@@ -61,13 +61,13 @@ export class OrderController implements IOrderController {
   }
 
   async update(id: string, updateOrderDto: UpdateOrderDto): Promise<ApplicationResult<string| OrderEntity>> {
-    const order = await this.orderService.findOne(id);
-    if (order.status === ResultStatus.ERROR) {
+    const orderResult = await this.orderService.findOne(id);
+    if (orderResult.status === ResultStatus.ERROR) {
       return new OrderNotFoundApplicationResultError();
     }
-
-    order.data.changeStatus(updateOrderDto.status as OrderStatus);
-    const updatedOrder = await this.orderService.update(id, order.data);
+    const order = orderResult.data;
+    order.changeStatus(updateOrderDto.status as OrderStatus);
+    const updatedOrder = await this.orderService.update(id, order);
 
     if (updatedOrder.status === ResultStatus.ERROR) {
       return new UpdateOrderApplicationResultError()

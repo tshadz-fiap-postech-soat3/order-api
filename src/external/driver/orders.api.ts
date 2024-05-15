@@ -8,17 +8,17 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { OrderStatus } from '../../@core/order/entitites/order.entity';
 import { CreateOrderDto } from '../../@core/order/dtos/create-order.dto';
 import { UpdateOrderDto } from '../../@core/order/dtos/update-order.dto';
-import { OrderControllerInterface } from '../../@core/order/controller/order-controller.interface';
+import { IOrderController } from '../../@core/order/controller/order-controller.interface';
 import { IOrderService } from '../../@core/order/services/order-service.interface';
+import { OrderStatus } from '../../@core/order/enums/order-status.enum';
 
 @ApiTags('order')
 @Controller('orders')
 export class OrdersApi {
   constructor(
-    private readonly ordersController: OrderControllerInterface,
+    private readonly ordersController: IOrderController,
     private readonly ordersService: IOrderService,
   ) {}
 
