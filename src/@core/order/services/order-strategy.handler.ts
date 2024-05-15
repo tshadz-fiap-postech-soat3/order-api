@@ -1,7 +1,9 @@
 import { IStrategy } from 'src/@core/application/model/strategy';
 import {
-  IOrderConfirmedStrategy,
-  IOrderPlacedStrategy,
+  IOrderCancelledStrategy,
+  IOrderConcludedStrategy,
+  IOrderConfirmedStrategy, IOrderInProcessingStrategy,
+  IOrderPlacedStrategy, IOrderReadyToPickupStrategy,
   IOrderStrategy,
 } from '../../application/contracts/order.strategy';
 import { OrderStatus } from '../enums/order-status.enum';
@@ -16,17 +18,18 @@ export class OrderStrategy implements IOrderStrategy {
     [OrderStatus.PLACED]: this.orderPlacedStrategy,
     [OrderStatus.CONFIRMED]: this.orderConfirmedStrategy,
     [OrderStatus.PROCESSING]: this.orderInProcessingStrategy,
-    [OrderStatus.READY_TO_PICKUP]: this.placeOrderStrategy,
-    [OrderStatus.CONCLUDED]: this.finishPaymentStrategy,
-    [OrderStatus.CANCELLED]: this.finishPaymentStrategy,
+    [OrderStatus.READY_TO_PICKUP]: this.orderReadyToPickupStrategy,
+    [OrderStatus.CONCLUDED]: this.orderConcludedStrategy,
+    [OrderStatus.CANCELLED]: this.orderCancelledStrategy,
   };
 
   constructor(
      private readonly orderPlacedStrategy: IOrderPlacedStrategy<OrderEntity, void>,
      private readonly orderConfirmedStrategy: IOrderConfirmedStrategy<OrderEntity, void>,
      private readonly orderInProcessingStrategy: IOrderInProcessingStrategy<OrderEntity, void>,
-     private readonly placeOrderStrategy: IStrategy<OrderEntity, void>,
-     private readonly finishPaymentStrategy: IStrategy<OrderEntity, void>) {
+     private readonly orderReadyToPickupStrategy: IOrderReadyToPickupStrategy<OrderEntity, void>,
+     private readonly orderConcludedStrategy: IOrderConcludedStrategy<OrderEntity, void>,
+     private readonly orderCancelledStrategy: IOrderCancelledStrategy<OrderEntity, void>) {
   }
 
   private chooseOrderHandler(orderStatus: OrderStatus): IStrategy<OrderEntity, void> {
