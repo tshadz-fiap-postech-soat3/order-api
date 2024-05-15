@@ -17,6 +17,7 @@ import {
   CalculateOrderApplicationSuccess
 } from '../../application/application-result-success/calculate-order-response';
 import { OrderStatus } from '../enums/order-status.enum';
+import { OrderNotFoundApplicationResultError } from '../../application/application-result-error/order-not-found';
 
 @Injectable()
 export class OrderController implements IOrderController {
@@ -59,12 +60,8 @@ export class OrderController implements IOrderController {
 
   async update(id: string, updateOrderDto: UpdateOrderDto): Promise<ApplicationResult<string| OrderEntity>> {
     const order = await this.orderService.findOne(id);
-    if (order.status === ResultStatus.ERROR) {
-      return new ApplicationResult(
-        ApplicationResultEvents.ERROR,
-        'Order not found',
-      );
-    }
+    if (order.status === ResultStatus.ERROR) return new OrderNotFoundApplicationResultError();
+
     order.data.changeStatus(updateOrderDto.status as OrderStatus);
     const updatedOrder = await this.orderService.update(id, order.data);
     if (updatedOrder.status === ResultStatus.ERROR) {
