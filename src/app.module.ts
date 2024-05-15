@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { OrdersModule } from './@core/order/orders.module';
+import { OrderModule } from './@core/order/order.module';
 import { DatabaseModule } from './external/driven/infra/database/database.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    OrdersModule,
+    OrderModule,
     DatabaseModule,
     ConfigModule.forRoot()
   ],

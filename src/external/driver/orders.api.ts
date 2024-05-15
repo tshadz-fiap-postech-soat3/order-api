@@ -11,14 +11,14 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { OrderStatus } from '../../@core/order/entitites/order.entity';
 import { CreateOrderDto } from '../../@core/order/dtos/create-order.dto';
 import { UpdateOrderDto } from '../../@core/order/dtos/update-order.dto';
-import { IOrdersController } from '../../@core/order/controller/iorders-controller';
+import { OrderControllerInterface } from '../../@core/order/controller/order-controller.interface';
 import { IOrderService } from '../../@core/order/services/order-service.interface';
 
 @ApiTags('order')
 @Controller('orders')
 export class OrdersApi {
   constructor(
-    private readonly ordersController: IOrdersController,
+    private readonly ordersController: OrderControllerInterface,
     private readonly ordersService: IOrderService,
   ) {}
 

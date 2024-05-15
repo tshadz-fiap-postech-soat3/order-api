@@ -8,7 +8,7 @@ import {
   CalculateOrderApplicationSuccess
 } from '../../application/application-result-success/calculate-order-response';
 
-export abstract class IOrdersController {
+export abstract class OrderControllerInterface {
   public abstract create(
     order: CreateOrderDto,
   ): Promise<ApplicationResult<OrderEntity | string>>;

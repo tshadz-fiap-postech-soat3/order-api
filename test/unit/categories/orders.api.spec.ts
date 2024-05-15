@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersApi } from '../../../src/external/driver/orders.api';
-import { OrdersService } from '../../../src/@core/order/orders.service';
+import { OrderService } from '../../../src/@core/order/order.service';
 import { IOrdersRepository } from '../../../src/@core/order/repositories/order-repository.interface';
 import { OrderRepository } from '../../../src/@core/order/repositories/order-repository';
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
 import { OrderController } from '../../../src/@core/order/controller/order.controller';
 import { OrderServiceInterface } from '../../../src/@core/order/services/order-service.interface';
-import { IOrdersController } from '../../../src/@core/order/controller/iorders-controller';
+import { OrderControllerInterface } from '../../../src/@core/order/controller/order-controller.interface';
 
 describe('OrdersApi', () => {
   let controller: OrdersApi;
@@ -16,12 +16,12 @@ describe('OrdersApi', () => {
       controllers: [OrdersApi],
       providers: [
         {
-          provide: IOrdersController,
+          provide: OrderControllerInterface,
           useClass: OrderController,
         },
         {
           provide: OrderServiceInterface,
-          useClass: OrdersService,
+          useClass: OrderService,
         },
         {
           provide: IOrdersRepository,

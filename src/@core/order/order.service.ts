@@ -9,7 +9,7 @@ import { ResultSuccess } from '../application/result/result-success';
 
 
 @Injectable()
-export class OrdersService implements IOrderService {
+export class OrderService implements IOrderService {
   constructor(
     @Inject(IOrderRepository)
     private ordersRepository: IOrderRepository,

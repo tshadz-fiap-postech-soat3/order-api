@@ -2,15 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { IOrdersRepository } from '../../../src/@core/order/repositories/order-repository.interface';
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
 import { OrderRepository } from '../../../src/@core/order/repositories/order-repository';
-import { OrdersService } from '../../../src/@core/order/orders.service';
+import { OrderService } from '../../../src/@core/order/order.service';
 
 describe('OrdersService', () => {
-  let service: OrdersService;
+  let service: OrderService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        OrdersService,
+        OrderService,
         {
           provide: IOrdersRepository,
           useClass: OrderRepository,
@@ -19,7 +19,7 @@ describe('OrdersService', () => {
       ],
     }).compile();
 
-    service = module.get<OrdersService>(OrdersService);
+    service = module.get<OrderService>(OrderService);
   });
 
   it('should be defined', () => {

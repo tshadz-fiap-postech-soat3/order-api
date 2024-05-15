@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ApplicationResult } from '../../application/application-result/application-result';
 import { ApplicationResultEvents } from '../../application/application-result/application-result-events';
 import { ResultStatus } from '../../application/result/result-status';
-import { IOrdersController } from './iorders-controller';
+import { OrderControllerInterface } from './order-controller.interface';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { IOrderService } from '../services/order-service.interface';
@@ -18,7 +18,7 @@ import {
 } from '../../application/application-result-success/calculate-order-response';
 
 @Injectable()
-export class OrderController implements IOrdersController {
+export class OrderController implements OrderControllerInterface {
   constructor(
     @Inject(IOrderService)
     private orderService: IOrderService,

@@ -3,7 +3,7 @@ import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
 import { OrderItemEntity } from '../entitites/order-item';
 import { UpdateOrderItemDto } from '../dtos/order-item/update-order-item.dto';
 
-export abstract class OrderItemsServiceInterface {
+export abstract class OrderItemServiceInterface {
   public abstract create(
     orderItem: CreateOrderItemDto[],
   ): Promise<Result<OrderItemEntity[]>>;
