@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ApplicationResult } from '../../application/application-result/application-result';
 import { ApplicationResultEvents } from '../../application/application-result/application-result-events';
 import { ResultStatus } from '../../application/result/result-status';
-import { OrderControllerInterface } from './order-controller.interface';
+import { IOrderController } from './order-controller.interface';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { IOrderService } from '../services/order-service.interface';
@@ -16,9 +16,10 @@ import { IProductService } from '../services/product-service.interface';
 import {
   CalculateOrderApplicationSuccess
 } from '../../application/application-result-success/calculate-order-response';
+import { OrderStatus } from '../enums/order-status.enum';
 
 @Injectable()
-export class OrderController implements OrderControllerInterface {
+export class OrderController implements IOrderController {
   constructor(
     @Inject(IOrderService)
     private orderService: IOrderService,
@@ -64,7 +65,8 @@ export class OrderController implements OrderControllerInterface {
         'Order not found',
       );
     }
-    const updatedOrder = await this.orderService.update(id, updateOrderDto);
+    order.data.changeStatus(updateOrderDto.status as OrderStatus);
+    const updatedOrder = await this.orderService.update(id, order.data);
     if (updatedOrder.status === ResultStatus.ERROR) {
       return new ApplicationResult(
         ApplicationResultEvents.ERROR,

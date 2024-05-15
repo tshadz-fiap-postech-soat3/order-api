@@ -1,7 +1,7 @@
 import { BaseEntity } from '../../application/model/base-entity';
 import { OrderStatus } from '../enums/order-status.enum';
 
-export class OrderEntity extends BaseEntity{
+export class OrderEntity extends BaseEntity {
 
   status: OrderStatus;
   customerId: string;
@@ -15,7 +15,9 @@ export class OrderEntity extends BaseEntity{
 
   }
 
-  changeStatus(status: OrderStatus): OrderEntity{
+  changeStatus(status: OrderStatus): OrderEntity {
+    const isValidStatus = Object.values(OrderStatus).some((s) => s === status);
+    if (!isValidStatus) throw "Invalid Order Status"
     this.updateDate();
     this.status = status;
     return this

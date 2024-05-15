@@ -6,6 +6,7 @@ import { IOrderService } from './order-service.interface';
 import { ResultError } from '../../application/result/result-error';
 import { ResultSuccess } from '../../application/result/result-success';
 import { OrderStatus } from '../enums/order-status.enum';
+import { OrderEntity } from '../entitites/order.entity';
 
 
 @Injectable()
@@ -39,8 +40,8 @@ export class OrderService implements IOrderService {
     return new ResultSuccess(result);
   }
 
-  async update(id: string, updateOrderDto: UpdateOrderDto) {
-    const result = await this.ordersRepository.update(id, updateOrderDto);
+  async update(id: string, order: OrderEntity) {
+    const result = await this.ordersRepository.update(id, order);
     if (!result) return new ResultError('Not able to update the order');
     return new ResultSuccess(result);
   }

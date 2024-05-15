@@ -9,7 +9,7 @@ export abstract class IOrderService {
   ): Promise<Result<OrderEntity>>;
   public abstract update(
     id: string,
-    order: UpdateOrderDto,
+    order: OrderEntity,
   ): Promise<Result<OrderEntity>>;
   public abstract findOne(category: string): Promise<Result<OrderEntity>>;
   public abstract findAllByStatus(name: string): Promise<Result<OrderEntity[]>>;

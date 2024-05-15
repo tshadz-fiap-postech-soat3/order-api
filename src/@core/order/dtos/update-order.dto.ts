@@ -1,7 +1,7 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { OrderStatus } from '../entitites/order.entity';
 import { CreateOrderDto } from './create-order.dto';
+import { OrderStatus } from '../enums/order-status.enum';
 
 export class UpdateOrderDto extends PartialType(CreateOrderDto) {
   @ApiProperty({ example: 'Aguardando Pagamento' })
