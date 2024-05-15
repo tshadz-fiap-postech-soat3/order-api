@@ -7,17 +7,14 @@ import { OrderControllerInterface } from './controller/order-controller.interfac
 import { OrderController } from './controller/order.controller';
 import { OrderRepositoryProvider } from './repositories/order-repository.provider';
 import { InfraModule } from '../../external/driven/infra/infra.module';
+import { OrderServiceProvider } from './services/order-service.provider';
 
 @Module({
   imports: [InfraModule],
   controllers: [OrdersApi],
   providers: [
     OrderRepositoryProvider,
-    OrderService,
-    {
-      provide: IOrderService,
-      useClass: OrderService,
-    },
+    OrderServiceProvider,
     OrderController,
     {
       provide: OrderControllerInterface,
