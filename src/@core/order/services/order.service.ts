@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { IOrderRepository } from '../repositories/order-repository.interface';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { IOrderService } from './order-service.interface';
@@ -6,12 +6,15 @@ import { ResultError } from '../../application/result/result-error';
 import { ResultSuccess } from '../../application/result/result-success';
 import { OrderStatus } from '../enums/order-status.enum';
 import { OrderEntity } from '../entitites/order.entity';
-import { IProductService } from './product-service.interface';
+import {
+  IProductService,
+  RetrievePriceOfProductsInTotalAndPerUnitRequestDto,
+} from './product-service.interface';
 import { ProductEntity } from '../entitites/product.entity';
-import { OrderItems } from '@prisma/client';
 import { OrderItemEntity } from '../entitites/order-item.entity';
 import { IOrderItemRepository } from '../repositories/order-item-repository.interface';
 import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
+import { RetrieveProductPriceUnitAndTotalDto } from '../dtos/retrieve-product-price-unit-and-total.dto';
 
 @Injectable()
 export class OrderService implements IOrderService {
@@ -22,35 +25,47 @@ export class OrderService implements IOrderService {
   ) {}
 
   async create({ customerId, items }: CreateOrderDto) {
-    const orderPrice = await this.calculateTotalPrice(items);
-    const order = new OrderEntity(orderPrice, customerId);
+    const retrievedProductsPrice =
+      await this.recoverPriceOfProductsInTotalAndPerUnit(items);
+    const order = new OrderEntity(
+      retrievedProductsPrice.totalPrice,
+      customerId,
+    );
     const result = await this.ordersRepository.insert(order);
     if (!result) return new ResultError('Not able to create the order');
     await this.orderItemRepository.insertMany(
-      this.mapOrderItems(order.id, items),
+      this.mapOrderItemsFromProducts(order.id, retrievedProductsPrice.products),
     );
     return new ResultSuccess(result);
   }
 
-  private mapOrderItems(
+  private mapOrderItemsFromProducts(
     orderId: string,
-    items: CreateOrderItemDto[],
+    items: ProductEntity[],
   ): OrderItemEntity[] {
     return items.map(
-      (item) => new OrderItemEntity(orderId, item.productId, item.quantity),
+      (item) =>
+        new OrderItemEntity(orderId, item.id, item.quantity, item.price),
     );
   }
-
-  private async calculateTotalPrice(
+  private async recoverPriceOfProductsInTotalAndPerUnit(
     items: CreateOrderItemDto[],
-  ): Promise<number> {
-    const productsIds = items.map(({ productId }) =>
-      new ProductEntity().setId(productId),
-    );
-    const orderPrice =
-      await this.productService.calculateTotalPrice(productsIds);
+  ): Promise<RetrieveProductPriceUnitAndTotalDto> {
+    const retrievePriceProducts: RetrievePriceOfProductsInTotalAndPerUnitRequestDto =
+      {
+        products: items.map(({ productId }) => ({
+          id: productId,
+        })),
+      };
+    const retrievedProducts =
+      await this.productService.retrievePriceOfProductsInTotalAndPerUnit(
+        retrievePriceProducts,
+      );
 
-    return orderPrice.data;
+    return {
+      totalPrice: retrievedProducts.data.totalPrice,
+      products: retrievedProducts.data.products,
+    };
   }
 
   async findAll() {

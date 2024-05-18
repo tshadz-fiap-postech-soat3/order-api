@@ -11,7 +11,6 @@ import { CreateOrderApplicationResultError } from '../../application/application
 import { CreateOrderApplicationResultSuccess } from '../../application/application-result-success/create-order-success';
 import { ProductEntity } from '../entitites/product.entity';
 import { IProductService } from '../services/product-service.interface';
-import { CalculateOrderApplicationSuccess } from '../../application/application-result-success/calculate-order-response';
 import { OrderStatus } from '../enums/order-status.enum';
 import { OrderNotFoundApplicationResultError } from '../../application/application-result-error/order-not-found';
 import { UpdateOrderApplicationResultError } from '../../application/application-result-error/update-order-error';
@@ -36,11 +35,15 @@ export class OrderController implements IOrderController {
   }
 
   async calculateOrder(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     products: ProductEntity[],
   ): Promise<ApplicationResult<number>> {
-    const totalProducts =
-      await this.productService.calculateTotalPrice(products);
-    return new CalculateOrderApplicationSuccess(totalProducts.data);
+    throw new Error('Method not implemented');
+    // const totalProducts =
+    //   await this.productService.retrievePriceOfProductsInTotalAndPerUnit(
+    //     products,
+    //  );
+    // return new CalculateOrderApplicationSuccess(totalProducts.data.totalPrice);
   }
 
   async findAll() {

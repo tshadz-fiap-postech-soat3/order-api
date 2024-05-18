@@ -27,6 +27,7 @@ model OrderItems {
   orderId   String
   productId String
   quantity  Int
+  price  Int
   createdAtDate DateTime  @default(now()) @db.Timestamp(6)
   updatedAtDate DateTime  @default(now()) @db.Timestamp(6)
 }
