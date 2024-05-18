@@ -8,25 +8,32 @@ import { OrderStatus } from '../enums/order-status.enum';
 import { OrderEntity } from '../entitites/order.entity';
 import { IProductService } from './product-service.interface';
 import { ProductEntity } from '../entitites/product.entity';
+import { OrderItems } from '@prisma/client';
+import { OrderItemEntity } from '../entitites/order-item.entity';
 
 @Injectable()
 export class OrderService implements IOrderService {
   constructor(
-    @Inject(IOrderRepository)
     private ordersRepository: IOrderRepository,
     private productService: IProductService,
   ) {}
 
   async create({ customerId, items }: CreateOrderDto) {
-    const productsIds = items.map((item) =>
-      new ProductEntity().setId(item.productId),
-    );
-    const orderPrice =
-      await this.productService.calculateTotalPrice(productsIds);
-    const order = new OrderEntity(orderPrice.data, customerId);
+    const orderPrice = await this.calculateTotalPrice(items);
+    const order = new OrderEntity(orderPrice, customerId);
     const result = await this.ordersRepository.insert(order);
     if (!result) return new ResultError('Not able to create the order');
     return new ResultSuccess(result);
+  }
+
+  private async calculateTotalPrice(items: OrderItemEntity[]): Promise<number> {
+    const productsIds = items.map(({ productId }) =>
+      new ProductEntity().setId(productId),
+    );
+    const orderPrice =
+      await this.productService.calculateTotalPrice(productsIds);
+
+    return orderPrice.data;
   }
 
   async findAll() {

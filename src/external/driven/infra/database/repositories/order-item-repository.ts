@@ -3,7 +3,7 @@ import { IOrderItemRepository } from '../../../../../@core/order/repositories/or
 import { PrismaService } from '../prisma.service';
 import { CreateOrderItemDto } from '../../../../../@core/order/dtos/order-item/create-order-item.dto';
 import { UpdateOrderItemDto } from '../../../../../@core/order/dtos/order-item/update-order-item.dto';
-import { OrderItemEntity } from '../../../../../@core/order/entitites/order-item';
+import { OrderItemEntity } from '../../../../../@core/order/entitites/order-item.entity';
 
 @Injectable()
 export class OrderItemRepository implements IOrderItemRepository {

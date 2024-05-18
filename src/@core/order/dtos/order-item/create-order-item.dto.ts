@@ -1,8 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { OrderItemEntity } from '../../entitites/order-item';
+import { OrderItemEntity } from '../../entitites/order-item.entity';
 
 export class CreateOrderItemDto extends OrderItemEntity {
-
   @ApiProperty({ example: 'prod-1' })
   productId: string;
 

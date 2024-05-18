@@ -5,7 +5,7 @@ import { UpdateOrderItemDto } from '../dtos/order-item/update-order-item.dto';
 import { OrderItemServiceInterface } from './order-item-service.interface';
 import { ResultError } from '../../application/result/result-error';
 import { ResultSuccess } from '../../application/result/result-success';
-import { OrderItemEntity } from '../entitites/order-item';
+import { OrderItemEntity } from '../entitites/order-item.entity';
 
 @Injectable()
 export class OrderItemService implements OrderItemServiceInterface {

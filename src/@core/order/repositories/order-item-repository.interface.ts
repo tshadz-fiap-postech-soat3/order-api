@@ -1,9 +1,11 @@
 import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
 import { UpdateOrderItemDto } from '../dtos/order-item/update-order-item.dto';
-import { OrderItemEntity } from '../entitites/order-item';
+import { OrderItemEntity } from '../entitites/order-item.entity';
 
 export abstract class IOrderItemRepository {
-  public abstract insert(order: CreateOrderItemDto[]): Promise<OrderItemEntity[]>;
+  public abstract insert(
+    order: CreateOrderItemDto[],
+  ): Promise<OrderItemEntity[]>;
   public abstract update(
     id: string,
     order: UpdateOrderItemDto,
