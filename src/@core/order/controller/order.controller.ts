@@ -7,15 +7,11 @@ import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { IOrderService } from '../services/order-service.interface';
 import { OrderEntity } from '../entitites/order.entity';
-import {
-  CreateOrderApplicationResultError
-} from '../../application/application-result-error/create-order-error';
+import { CreateOrderApplicationResultError } from '../../application/application-result-error/create-order-error';
 import { CreateOrderApplicationResultSuccess } from '../../application/application-result-success/create-order-success';
 import { ProductEntity } from '../entitites/product.entity';
 import { IProductService } from '../services/product-service.interface';
-import {
-  CalculateOrderApplicationSuccess
-} from '../../application/application-result-success/calculate-order-response';
+import { CalculateOrderApplicationSuccess } from '../../application/application-result-success/calculate-order-response';
 import { OrderStatus } from '../enums/order-status.enum';
 import { OrderNotFoundApplicationResultError } from '../../application/application-result-error/order-not-found';
 import { UpdateOrderApplicationResultError } from '../../application/application-result-error/update-order-error';
@@ -27,19 +23,24 @@ export class OrderController implements IOrderController {
     @Inject(IOrderService)
     private orderService: IOrderService,
     @Inject(IProductService)
-    private productService: IProductService
-  ) {
-  }
+    private productService: IProductService,
+  ) {}
 
-  async create(createOrderDto: CreateOrderDto): Promise<ApplicationResult<string | OrderEntity>> {
+  async create(
+    createOrderDto: CreateOrderDto,
+  ): Promise<ApplicationResult<string | OrderEntity>> {
     const createdOrder = await this.orderService.create(createOrderDto);
-    if (createdOrder.status === ResultStatus.ERROR) return new CreateOrderApplicationResultError();
-    return new CreateOrderApplicationResultSuccess( createdOrder.data);
+    if (createdOrder.status === ResultStatus.ERROR)
+      return new CreateOrderApplicationResultError();
+    return new CreateOrderApplicationResultSuccess(createdOrder.data);
   }
 
-  async calculateOrder(products: ProductEntity[]): Promise<ApplicationResult<number>>  {
-    const totalProducts = await this.productService.calculateTotalPrice(products);
-    return new CalculateOrderApplicationSuccess(totalProducts.data) ;
+  async calculateOrder(
+    products: ProductEntity[],
+  ): Promise<ApplicationResult<number>> {
+    const totalProducts =
+      await this.productService.calculateTotalPrice(products);
+    return new CalculateOrderApplicationSuccess(totalProducts.data);
   }
 
   async findAll() {
@@ -60,7 +61,10 @@ export class OrderController implements IOrderController {
     );
   }
 
-  async update(id: string, updateOrderDto: UpdateOrderDto): Promise<ApplicationResult<string| OrderEntity>> {
+  async update(
+    id: string,
+    updateOrderDto: UpdateOrderDto,
+  ): Promise<ApplicationResult<string | OrderEntity>> {
     const orderResult = await this.orderService.findOne(id);
     if (orderResult.status === ResultStatus.ERROR) {
       return new OrderNotFoundApplicationResultError();
@@ -70,7 +74,7 @@ export class OrderController implements IOrderController {
     const updatedOrder = await this.orderService.update(id, order);
 
     if (updatedOrder.status === ResultStatus.ERROR) {
-      return new UpdateOrderApplicationResultError()
+      return new UpdateOrderApplicationResultError();
     }
 
     return new UpdateOrderApplicationResultSuccess(updatedOrder.data);

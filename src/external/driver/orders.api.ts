@@ -63,5 +63,4 @@ export class OrdersApi {
   remove(@Param('id') id: string) {
     return this.ordersController.remove(id);
   }
-
 }

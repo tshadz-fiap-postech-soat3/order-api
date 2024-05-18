@@ -1,6 +1,8 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class BaseEntity {
-  constructor(id: string) {
-    this.id = id;
+  constructor() {
+    this.id = uuidv4();
     this.createdAtDate = new Date();
     this.updatedAtDate = new Date();
   }
@@ -10,6 +12,10 @@ export class BaseEntity {
   createdAtDate: Date;
   updatedAtDate: Date;
 
+  setId(id: string){
+    this.id = id;
+    return this;
+  }
   updateDate(){
     this.updatedAtDate = new Date();
   }

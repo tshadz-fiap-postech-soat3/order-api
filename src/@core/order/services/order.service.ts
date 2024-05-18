@@ -1,23 +1,30 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IOrderRepository } from '../repositories/order-repository.interface';
 import { CreateOrderDto } from '../dtos/create-order.dto';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
 import { IOrderService } from './order-service.interface';
 import { ResultError } from '../../application/result/result-error';
 import { ResultSuccess } from '../../application/result/result-success';
 import { OrderStatus } from '../enums/order-status.enum';
 import { OrderEntity } from '../entitites/order.entity';
-
+import { IProductService } from './product-service.interface';
+import { ProductEntity } from '../entitites/product.entity';
 
 @Injectable()
 export class OrderService implements IOrderService {
   constructor(
     @Inject(IOrderRepository)
     private ordersRepository: IOrderRepository,
+    private productService: IProductService,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto) {
-    const result = await this.ordersRepository.insert(createOrderDto);
+  async create({ customerId, items }: CreateOrderDto) {
+    const productsIds = items.map((item) =>
+      new ProductEntity().setId(item.productId),
+    );
+    const orderPrice =
+      await this.productService.calculateTotalPrice(productsIds);
+    const order = new OrderEntity(orderPrice.data, customerId);
+    const result = await this.ordersRepository.insert(order);
     if (!result) return new ResultError('Not able to create the order');
     return new ResultSuccess(result);
   }

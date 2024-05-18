@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
-import { IOrderRepository } from '../../../../@core/order/repositories/order-repository.interface';
-import { OrderRepository } from './repositories/order-repository';
 import { ProductServiceProvider } from '../services/product-service.provider';
 import { OrderItemRepositoryProvider } from './repositories/order-item-repository.provider';
 import { OrderRepositoryProvider } from './repositories/order-repository.provider';
@@ -13,12 +11,12 @@ import { OrderRepositoryProvider } from './repositories/order-repository.provide
     PrismaService,
     ProductServiceProvider,
     OrderItemRepositoryProvider,
-    OrderRepositoryProvider
+    OrderRepositoryProvider,
   ],
   exports: [
     ProductServiceProvider,
     OrderItemRepositoryProvider,
-    OrderRepositoryProvider
+    OrderRepositoryProvider,
   ],
 })
 export class DatabaseModule {}

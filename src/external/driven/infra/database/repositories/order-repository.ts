@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IOrderRepository } from '../../../../../@core/order/repositories/order-repository.interface';
 import { PrismaService } from '../prisma.service';
-import { CreateOrderDto } from '../../../../../@core/order/dtos/create-order.dto';
-import { UpdateOrderDto } from '../../../../../@core/order/dtos/update-order.dto';
 import { OrderEntity } from '../../../../../@core/order/entitites/order.entity';
 import { OrderStatus } from '../../../../../@core/order/enums/order-status.enum';
 
@@ -10,14 +8,12 @@ import { OrderStatus } from '../../../../../@core/order/enums/order-status.enum'
 export class OrderRepository implements IOrderRepository {
   constructor(private prisma: PrismaService) {}
 
-  async insert(order: CreateOrderDto): Promise<OrderEntity> {
-    const result = await this.prisma.order.create({
-      data: order,
-    });
+  async insert(order: OrderEntity): Promise<OrderEntity> {
+    const result = await this.prisma.order.create({ data: order });
     return result as unknown as OrderEntity;
   }
 
-  async update(id: string, order: UpdateOrderDto): Promise<OrderEntity> {
+  async update(id: string, order: OrderEntity): Promise<OrderEntity> {
     const result = await this.prisma.order.update({
       data: order,
       where: {
