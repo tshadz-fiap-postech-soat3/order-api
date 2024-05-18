@@ -1,16 +1,12 @@
-export class OrderItemEntity {
-  id: string;
+import { BaseEntity } from '../../application/model/base-entity';
+
+export class OrderItemEntity extends BaseEntity {
   orderId: string;
   productId: string;
   quantity: number;
 
-  constructor(
-    id: string,
-    orderId: string,
-    productId: string,
-    quantity: number,
-  ) {
-    this.id = id;
+  constructor(orderId: string, productId: string, quantity: number) {
+    super();
     this.orderId = orderId;
     this.productId = productId;
     this.quantity = quantity;

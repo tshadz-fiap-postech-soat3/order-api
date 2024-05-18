@@ -10,11 +10,14 @@ import { IProductService } from './product-service.interface';
 import { ProductEntity } from '../entitites/product.entity';
 import { OrderItems } from '@prisma/client';
 import { OrderItemEntity } from '../entitites/order-item.entity';
+import { IOrderItemRepository } from '../repositories/order-item-repository.interface';
+import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
 
 @Injectable()
 export class OrderService implements IOrderService {
   constructor(
     private ordersRepository: IOrderRepository,
+    private orderItemRepository: IOrderItemRepository,
     private productService: IProductService,
   ) {}
 
@@ -23,10 +26,24 @@ export class OrderService implements IOrderService {
     const order = new OrderEntity(orderPrice, customerId);
     const result = await this.ordersRepository.insert(order);
     if (!result) return new ResultError('Not able to create the order');
+    await this.orderItemRepository.insertMany(
+      this.mapOrderItems(order.id, items),
+    );
     return new ResultSuccess(result);
   }
 
-  private async calculateTotalPrice(items: OrderItemEntity[]): Promise<number> {
+  private mapOrderItems(
+    orderId: string,
+    items: CreateOrderItemDto[],
+  ): OrderItemEntity[] {
+    return items.map(
+      (item) => new OrderItemEntity(orderId, item.productId, item.quantity),
+    );
+  }
+
+  private async calculateTotalPrice(
+    items: CreateOrderItemDto[],
+  ): Promise<number> {
     const productsIds = items.map(({ productId }) =>
       new ProductEntity().setId(productId),
     );
