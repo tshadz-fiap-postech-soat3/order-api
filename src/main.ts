@@ -5,7 +5,6 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const prismaService = app.get(PrismaService);
 
   app.enableCors();
 
@@ -19,6 +18,7 @@ async function bootstrap() {
 
   SwaggerModule.setup('swagger', app, document);
   const apiPort = process.env.PORT ?? 8080
-  await app.listen(apiPort, () => console.log(`Application listening on the por ${apiPort}`));
+  await app.listen(apiPort, () => console.log(`Application listening on the port ${apiPort}`));
 }
-bootstrap();
+
+bootstrap().finally();
