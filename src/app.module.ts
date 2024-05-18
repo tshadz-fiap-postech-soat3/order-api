@@ -9,7 +9,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     ConfigModule.forRoot(),
     EventEmitterModule.forRoot(),
     OrderModule,
-    DatabaseModule
   ],
 })
 export class AppModule {}

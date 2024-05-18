@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from '../../external/driven/infra/database/prisma.service';
 import { OrdersApi } from '../../external/driver/orders.api';
 import { InfraModule } from '../../external/driven/infra/infra.module';
 import { OrderServiceProvider } from './services/order-service.provider';
@@ -11,8 +10,7 @@ import { OrderStrategiesModule } from './services/order-strategies/order-strateg
   controllers: [OrdersApi],
   providers: [
     OrderServiceProvider,
-    OrderControllerProvider,
-    PrismaService,
+    OrderControllerProvider
   ],
 })
 export class OrderModule {}

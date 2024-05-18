@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { OrderItemRepositoryInterface } from '../repositories/order-item-repository.interface';
+import { IOrderItemRepository } from '../repositories/order-item-repository.interface';
 import { CreateOrderItemDto } from '../dtos/order-item/create-order-item.dto';
 import { UpdateOrderItemDto } from '../dtos/order-item/update-order-item.dto';
 import { OrderItemServiceInterface } from './order-item-service.interface';
@@ -10,8 +10,8 @@ import { OrderItemEntity } from '../entitites/order-item';
 @Injectable()
 export class OrderItemService implements OrderItemServiceInterface {
   constructor(
-    @Inject(OrderItemRepositoryInterface)
-    private readonly orderItemsRepository: OrderItemRepositoryInterface,
+    @Inject(IOrderItemRepository)
+    private readonly orderItemsRepository: IOrderItemRepository,
   ) {}
 
   async create(createOrderItemDto: CreateOrderItemDto[]) {

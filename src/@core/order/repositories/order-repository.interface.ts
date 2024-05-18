@@ -1,6 +1,7 @@
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
-import { OrderEntity, OrderStatus } from '../entitites/order.entity';
+import { OrderEntity } from '../entitites/order.entity';
+import { OrderStatus } from '../enums/order-status.enum';
 
 export abstract class IOrderRepository {
   public abstract insert(order: CreateOrderDto): Promise<OrderEntity>;
