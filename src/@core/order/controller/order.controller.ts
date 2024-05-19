@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ApplicationResult } from '../../application/application-result/application-result';
 import { ApplicationResultEvents } from '../../application/application-result/application-result-events';
 import { ResultStatus } from '../../application/result/result-status';

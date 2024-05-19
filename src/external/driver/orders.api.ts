@@ -13,6 +13,7 @@ import { UpdateOrderDto } from '../../@core/order/dtos/update-order.dto';
 import { IOrderController } from '../../@core/order/controller/order-controller.interface';
 import { IOrderService } from '../../@core/order/services/order-service.interface';
 import { OrderStatus } from '../../@core/order/enums/order-status.enum';
+import { CalculateOrderDto } from '../../@core/order/dtos/calculate-order.dto';
 
 @ApiTags('order')
 @Controller('orders')
@@ -23,9 +24,15 @@ export class OrdersApi {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'create a new order' })
+  @ApiOperation({ summary: 'Create a new order' })
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersController.create(createOrderDto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Calculate a order total price ' })
+  calculateOrder(@Body() calculateOrderDto: CalculateOrderDto) {
+    return this.ordersController.calculateOrder(calculateOrderDto);
   }
 
   @Get()
