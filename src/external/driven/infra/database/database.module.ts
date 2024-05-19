@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma.service';
-import { ProductServiceProvider } from '../services/product-service.provider';
+import { ProductExternalProvider } from '../services/product-external.provider';
 import { OrderItemRepositoryProvider } from './repositories/order-item-repository.provider';
 import { OrderRepositoryProvider } from './repositories/order-repository.provider';
 
@@ -9,12 +9,12 @@ import { OrderRepositoryProvider } from './repositories/order-repository.provide
   imports: [ConfigModule],
   providers: [
     PrismaService,
-    ProductServiceProvider,
+    ProductExternalProvider,
     OrderItemRepositoryProvider,
     OrderRepositoryProvider,
   ],
   exports: [
-    ProductServiceProvider,
+    ProductExternalProvider,
     OrderItemRepositoryProvider,
     OrderRepositoryProvider,
   ],

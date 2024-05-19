@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import {
-  IProductService,
   RetrievePriceOfProductsInTotalAndPerUnitRequestDto,
   RetrievePriceOfProductsInTotalAndPerUnitResponseDto,
 } from '../../../../@core/order/services/product-service.interface';
 import { ResultSuccess } from '../../../../@core/application/result/result-success';
 import { ProductEntity } from '../../../../@core/order/entitites/product.entity';
+import { IProductExternal } from '../../../../@core/order/services/product-external.interface';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 @Injectable()
-export class ProductService implements IProductService {
+export class ProductExternal implements IProductExternal {
   public async retrievePriceOfProductsInTotalAndPerUnit(
     requestDto: RetrievePriceOfProductsInTotalAndPerUnitRequestDto,
   ): Promise<

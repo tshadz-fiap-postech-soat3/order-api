@@ -5,45 +5,69 @@ import { ResultStatus } from '../../application/result/result-status';
 import { IOrderController } from './order-controller.interface';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { UpdateOrderDto } from '../dtos/update-order.dto';
-import { IOrderService } from '../services/order-service.interface';
+import {
+  CreateOrderItemServiceDto,
+  CreateOrderServiceDto,
+  IOrderService,
+} from '../services/order-service.interface';
 import { OrderEntity } from '../entitites/order.entity';
 import { CreateOrderApplicationResultError } from '../../application/application-result-error/create-order-error';
 import { CreateOrderApplicationResultSuccess } from '../../application/application-result-success/create-order-success';
-import { ProductEntity } from '../entitites/product.entity';
 import { IProductService } from '../services/product-service.interface';
 import { OrderStatus } from '../enums/order-status.enum';
 import { OrderNotFoundApplicationResultError } from '../../application/application-result-error/order-not-found';
 import { UpdateOrderApplicationResultError } from '../../application/application-result-error/update-order-error';
 import { UpdateOrderApplicationResultSuccess } from '../../application/application-result-success/update-order-success';
+import {
+  CalculateOrderDto,
+  CalculateOrderResponseDto,
+} from '../dtos/calculate-order.dto';
+import { CalculateOrderApplicationSuccess } from '../../application/application-result-success/calculate-order-response';
 
 @Injectable()
 export class OrderController implements IOrderController {
   constructor(
-    @Inject(IOrderService)
     private orderService: IOrderService,
-    @Inject(IProductService)
     private productService: IProductService,
   ) {}
 
   async create(
     createOrderDto: CreateOrderDto,
   ): Promise<ApplicationResult<string | OrderEntity>> {
-    const createdOrder = await this.orderService.create(createOrderDto);
+    const calculatedOrder = await this.calculateOrder(createOrderDto);
+    const insertDto = this.mapInsertDto(createOrderDto, calculatedOrder);
+    const createdOrder = await this.orderService.create(insertDto);
     if (createdOrder.status === ResultStatus.ERROR)
       return new CreateOrderApplicationResultError();
     return new CreateOrderApplicationResultSuccess(createdOrder.data);
   }
 
+  private mapInsertDto(
+    createOrderDto: CreateOrderDto,
+    calculatedOrder: ApplicationResult<CalculateOrderResponseDto>,
+  ): CreateOrderServiceDto {
+    return {
+      customerId: createOrderDto.customerId,
+      items: calculatedOrder.message?.products.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity,
+        price: product.price,
+      })) as CreateOrderItemServiceDto[],
+      price: calculatedOrder.message?.totalPrice as number,
+    };
+  }
+
   async calculateOrder(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    products: ProductEntity[],
-  ): Promise<ApplicationResult<number>> {
-    throw new Error('Method not implemented');
-    // const totalProducts =
-    //   await this.productService.retrievePriceOfProductsInTotalAndPerUnit(
-    //     products,
-    //  );
-    // return new CalculateOrderApplicationSuccess(totalProducts.data.totalPrice);
+    calculateOrderDto: CalculateOrderDto,
+  ): Promise<ApplicationResult<CalculateOrderResponseDto>> {
+    const products = calculateOrderDto.items.map((item) => ({
+      id: item.productId,
+    }));
+    const retrievedProducts =
+      await this.productService.retrievePriceOfProductsInTotalAndPerUnit({
+        products,
+      });
+    return new CalculateOrderApplicationSuccess(retrievedProducts.data);
   }
 
   async findAll() {

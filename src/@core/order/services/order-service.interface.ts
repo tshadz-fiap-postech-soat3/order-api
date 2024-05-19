@@ -1,11 +1,20 @@
 import { Result } from '../../application/result/result';
-import { CreateOrderDto } from '../dtos/create-order.dto';
 import { OrderEntity } from '../entitites/order.entity';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
 
+export class CreateOrderServiceDto {
+  customerId: string;
+  items: CreateOrderItemServiceDto[];
+  price: number;
+}
+
+export class CreateOrderItemServiceDto {
+  productId: string;
+  quantity: number;
+  price: number;
+}
 export abstract class IOrderService {
   public abstract create(
-    order: CreateOrderDto,
+    order: CreateOrderServiceDto,
   ): Promise<Result<OrderEntity>>;
   public abstract update(
     id: string,
