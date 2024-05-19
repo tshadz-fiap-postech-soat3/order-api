@@ -2,7 +2,12 @@ import { ProductEntity } from '../entitites/product.entity';
 import { ResultSuccess } from '../../application/result/result-success';
 
 export class RetrievePriceOfProductsInTotalAndPerUnitRequestDto {
-  products: { id: string }[];
+  products: ProductPriceDto[];
+}
+
+export class ProductPriceDto {
+  id: string;
+  quantity: number;
 }
 export class RetrievePriceOfProductsInTotalAndPerUnitResponseDto {
   totalPrice: number;

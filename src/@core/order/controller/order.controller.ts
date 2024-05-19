@@ -60,13 +60,16 @@ export class OrderController implements IOrderController {
   async calculateOrder(
     calculateOrderDto: CalculateOrderDto,
   ): Promise<ApplicationResult<CalculateOrderResponseDto>> {
-    const products = calculateOrderDto.items.map((item) => ({
+    const mappedProductPriceDto = calculateOrderDto.items.map((item) => ({
       id: item.productId,
+      quantity: item.quantity,
     }));
+
     const retrievedProducts =
       await this.productService.retrievePriceOfProductsInTotalAndPerUnit({
-        products,
+        products: mappedProductPriceDto,
       });
+
     return new CalculateOrderApplicationSuccess(retrievedProducts.data);
   }
 

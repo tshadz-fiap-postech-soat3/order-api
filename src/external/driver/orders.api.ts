@@ -29,7 +29,7 @@ export class OrdersApi {
     return this.ordersController.create(createOrderDto);
   }
 
-  @Get()
+  @Get('calculate')
   @ApiOperation({ summary: 'Calculate a order total price ' })
   calculateOrder(@Body() calculateOrderDto: CalculateOrderDto) {
     return this.ordersController.calculateOrder(calculateOrderDto);

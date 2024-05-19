@@ -5,7 +5,10 @@ import {
 } from '../../../../@core/order/services/product-service.interface';
 import { ResultSuccess } from '../../../../@core/application/result/result-success';
 import { ProductEntity } from '../../../../@core/order/entitites/product.entity';
-import { IProductExternal } from '../../../../@core/order/services/product-external.interface';
+import {
+  IProductExternal,
+  ProductPriceExternalDto,
+} from '../../../../@core/order/services/product-external.interface';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -27,12 +30,12 @@ export class ProductExternal implements IProductExternal {
   }
 
   private simulateProductServiceResponse(
-    products: { id: string }[],
+    products: ProductPriceExternalDto[],
   ): RetrievePriceOfProductsInTotalAndPerUnitResponseDto {
     return {
       totalPrice: 200,
       products: products.map((item) =>
-        new ProductEntity('Item 1', 200, 1).setId(item.id),
+        new ProductEntity('Item 1', 200, item.quantity).setId(item.id),
       ),
     };
   }

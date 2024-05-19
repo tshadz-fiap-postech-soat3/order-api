@@ -1,8 +1,13 @@
 import { ProductEntity } from '../entitites/product.entity';
 import { ResultSuccess } from '../../application/result/result-success';
 
-export class RetrievePriceOfProductsInTotalAndPerUnitRequestDto {
-  products: { id: string }[];
+export class RetrievePriceOfProductsInTotalAndPerUnitExternalRequestDto {
+  products: ProductPriceExternalDto[];
+}
+
+export class ProductPriceExternalDto {
+  id: string;
+  quantity: number;
 }
 export class RetrievePriceOfProductsInTotalAndPerUnitResponseDto {
   totalPrice: number;
@@ -10,7 +15,7 @@ export class RetrievePriceOfProductsInTotalAndPerUnitResponseDto {
 }
 export abstract class IProductExternal {
   public abstract retrievePriceOfProductsInTotalAndPerUnit(
-    retrievePriceOfProductsInTotalAndPerUnitDto: RetrievePriceOfProductsInTotalAndPerUnitRequestDto,
+    retrievePriceOfProductsInTotalAndPerUnitDto: RetrievePriceOfProductsInTotalAndPerUnitExternalRequestDto,
   ): Promise<
     ResultSuccess<RetrievePriceOfProductsInTotalAndPerUnitResponseDto>
   >;
