@@ -10,7 +10,7 @@ import {
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateOrderDto } from '../../@core/order/dtos/create-order.dto';
 import { UpdateOrderDto } from '../../@core/order/dtos/update-order.dto';
-import { IOrderController } from '../../@core/order/controller/order-controller.interface';
+import { IOrderController } from '../../@core/order/controllers/order-controller.interface';
 import { IOrderService } from '../../@core/order/services/order-service.interface';
 import { OrderStatus } from '../../@core/order/enums/order-status.enum';
 import { CalculateOrderDto } from '../../@core/order/dtos/calculate-order.dto';

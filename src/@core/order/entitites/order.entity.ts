@@ -1,10 +1,12 @@
 import { BaseEntity } from '../../application/model/base-entity';
 import { OrderStatus } from '../enums/order-status.enum';
+import { OrderItemEntity } from './order-item.entity';
 
 export class OrderEntity extends BaseEntity {
   status: OrderStatus;
   customerId: string;
   price: number;
+  items: OrderItemEntity[];
 
   constructor(price: number, customerId: string) {
     super();

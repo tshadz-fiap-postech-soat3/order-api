@@ -9,7 +9,19 @@ import { OrderConcludedStrategyProvider } from './order-concluded.strategy';
 @Module({
   imports: [InfraModule],
   controllers: [],
-  providers: [OrderPlacedStrategyProvider, OrderConfirmedStrategyProvider, OrderConcludedStrategyProvider, OrderInProcessingStrategyProvider, OrderCancelledStrategyProvider],
-  exports: [OrderPlacedStrategyProvider, OrderConfirmedStrategyProvider, OrderConcludedStrategyProvider, OrderInProcessingStrategyProvider, OrderCancelledStrategyProvider]
+  providers: [
+    OrderPlacedStrategyProvider,
+    OrderConfirmedStrategyProvider,
+    OrderConcludedStrategyProvider,
+    OrderInProcessingStrategyProvider,
+    OrderCancelledStrategyProvider,
+  ],
+  exports: [
+    OrderPlacedStrategyProvider,
+    OrderConfirmedStrategyProvider,
+    OrderConcludedStrategyProvider,
+    OrderInProcessingStrategyProvider,
+    OrderCancelledStrategyProvider,
+  ],
 })
 export class OrderStrategiesModule {}

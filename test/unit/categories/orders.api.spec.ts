@@ -4,9 +4,9 @@ import { OrderService } from '../../../src/@core/order/services/order.service';
 import { IOrdersRepository } from '../../../src/@core/order/repositories/order-repository.interface';
 import { OrderRepository } from '../../../src/external/driven/infra/database/repositories/order-repository';
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
-import { OrderController } from '../../../src/@core/order/controller/order.controller';
+import { OrderController } from '../../../src/@core/order/controllers/order.controller';
 import { OrderServiceInterface } from '../../../src/@core/order/services/order-service.interface';
-import { OrderControllerInterface } from '../../../src/@core/order/controller/order-controller.interface';
+import { OrderControllerInterface } from '../../../src/@core/order/controllers/order-controller.interface';
 
 describe('OrdersApi', () => {
   let controller: OrdersApi;

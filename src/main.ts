@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { PrismaService } from './external/driven/infra/database/prisma.service';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -17,8 +16,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('swagger', app, document);
-  const apiPort = process.env.PORT ?? 8080
-  await app.listen(apiPort, () => console.log(`Application listening on the port ${apiPort}`));
+  const apiPort = process.env.PORT ?? 8080;
+  await app.listen(apiPort, () =>
+    console.log(`Application listening on the port ${apiPort}`),
+  );
 }
 
 bootstrap().finally();
