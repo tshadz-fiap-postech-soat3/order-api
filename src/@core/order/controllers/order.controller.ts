@@ -14,28 +14,33 @@ import { OrderEntity } from '../entitites/order.entity';
 import { CreateOrderApplicationResultError } from '../../application/application-result-error/create-order-error';
 import { CreateOrderApplicationResultSuccess } from '../../application/application-result-success/create-order-success';
 import { IProductService } from '../services/product-service.interface';
-import { OrderStatus } from '../enums/order-status.enum';
 import { OrderNotFoundApplicationResultError } from '../../application/application-result-error/order-not-found';
-import { UpdateOrderApplicationResultError } from '../../application/application-result-error/update-order-error';
-import { UpdateOrderApplicationResultSuccess } from '../../application/application-result-success/update-order-success';
 import {
   CalculateOrderDto,
   CalculateOrderResponseDto,
 } from '../dtos/calculate-order.dto';
 import { CalculateOrderApplicationSuccess } from '../../application/application-result-success/calculate-order-response';
+import { IOrderStrategy } from '../../application/contracts/order.strategy';
 
 @Injectable()
 export class OrderController implements IOrderController {
   constructor(
     private orderService: IOrderService,
     private productService: IProductService,
+    private orderStrategy: IOrderStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
   ) {}
 
   async create(
     createOrderDto: CreateOrderDto,
   ): Promise<ApplicationResult<string | OrderEntity>> {
     const calculatedOrder = await this.calculateOrder(createOrderDto);
-    const insertDto = this.mapInsertDto(createOrderDto, calculatedOrder);
+    const insertDto = this.mapInsertDto(
+      createOrderDto,
+      calculatedOrder.message as CalculateOrderResponseDto,
+    );
     const createdOrder = await this.orderService.create(insertDto);
     if (createdOrder.status === ResultStatus.ERROR)
       return new CreateOrderApplicationResultError();
@@ -44,16 +49,16 @@ export class OrderController implements IOrderController {
 
   private mapInsertDto(
     createOrderDto: CreateOrderDto,
-    calculatedOrder: ApplicationResult<CalculateOrderResponseDto>,
+    calculatedOrder: CalculateOrderResponseDto,
   ): CreateOrderServiceDto {
     return {
       customerId: createOrderDto.customerId,
-      items: calculatedOrder.message?.products.map((product) => ({
+      items: calculatedOrder.products.map((product) => ({
         productId: product.id,
         quantity: product.quantity,
         price: product.price,
       })) as CreateOrderItemServiceDto[],
-      price: calculatedOrder.message?.totalPrice as number,
+      price: calculatedOrder.totalPrice as number,
     };
   }
 
@@ -99,15 +104,15 @@ export class OrderController implements IOrderController {
     if (orderResult.status === ResultStatus.ERROR) {
       return new OrderNotFoundApplicationResultError();
     }
-    const order = orderResult.data;
-    order.changeStatus(updateOrderDto.status as OrderStatus);
-    const updatedOrder = await this.orderService.update(id, order);
 
-    if (updatedOrder.status === ResultStatus.ERROR) {
-      return new UpdateOrderApplicationResultError();
-    }
+    const orderToUpdate = {
+      ...orderResult.data,
+      ...updateOrderDto,
+    } as OrderEntity;
 
-    return new UpdateOrderApplicationResultSuccess(updatedOrder.data);
+    return this.orderStrategy
+      .makeHandler(orderToUpdate.status)
+      .execute(orderToUpdate);
   }
 
   async remove(id: string) {

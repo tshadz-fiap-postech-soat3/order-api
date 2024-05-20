@@ -2,17 +2,23 @@ import { IStrategy } from 'src/@core/application/model/strategy';
 import {
   IOrderCancelledStrategy,
   IOrderConcludedStrategy,
-  IOrderConfirmedStrategy, IOrderInProcessingStrategy,
-  IOrderPlacedStrategy, IOrderReadyToPickupStrategy,
+  IOrderConfirmedStrategy,
+  IOrderInProcessingStrategy,
+  IOrderPlacedStrategy,
+  IOrderReadyToPickupStrategy,
   IOrderStrategy,
 } from '../../application/contracts/order.strategy';
 import { OrderStatus } from '../enums/order-status.enum';
 import { Injectable } from '@nestjs/common';
 import { OrderEntity } from '../entitites/order.entity';
+import { ApplicationResult } from '../../application/application-result/application-result';
+import { ProviderMaker } from '../../application/utils/provider-maker';
 
 @Injectable()
-export class OrderStrategy implements IOrderStrategy {
-
+export class OrderStrategy
+  implements
+    IOrderStrategy<OrderEntity, ApplicationResult<string | OrderEntity>>
+{
   private readonly availableHandlersByStatus = {
     [OrderStatus.PAYMENT_DUE]: this.orderPlacedStrategy,
     [OrderStatus.PLACED]: this.orderPlacedStrategy,
@@ -24,19 +30,46 @@ export class OrderStrategy implements IOrderStrategy {
   };
 
   constructor(
-     private readonly orderPlacedStrategy: IOrderPlacedStrategy<OrderEntity, void>,
-     private readonly orderConfirmedStrategy: IOrderConfirmedStrategy<OrderEntity, void>,
-     private readonly orderInProcessingStrategy: IOrderInProcessingStrategy<OrderEntity, void>,
-     private readonly orderReadyToPickupStrategy: IOrderReadyToPickupStrategy<OrderEntity, void>,
-     private readonly orderConcludedStrategy: IOrderConcludedStrategy<OrderEntity, void>,
-     private readonly orderCancelledStrategy: IOrderCancelledStrategy<OrderEntity, void>) {
-  }
+    private readonly orderPlacedStrategy: IOrderPlacedStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
+    private readonly orderConfirmedStrategy: IOrderConfirmedStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
+    private readonly orderInProcessingStrategy: IOrderInProcessingStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
+    private readonly orderReadyToPickupStrategy: IOrderReadyToPickupStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
+    private readonly orderConcludedStrategy: IOrderConcludedStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
+    private readonly orderCancelledStrategy: IOrderCancelledStrategy<
+      OrderEntity,
+      ApplicationResult<string | OrderEntity>
+    >,
+  ) {}
 
-  private chooseOrderHandler(orderStatus: OrderStatus): IStrategy<OrderEntity, void> {
+  private chooseOrderHandler(
+    orderStatus: OrderStatus,
+  ): IStrategy<OrderEntity, ApplicationResult<string | OrderEntity>> {
     return this.availableHandlersByStatus[orderStatus];
   }
 
-  makeHandler(orderStatus: OrderStatus): IStrategy<OrderEntity, void> {
+  makeHandler(
+    orderStatus: OrderStatus,
+  ): IStrategy<OrderEntity, ApplicationResult<string | OrderEntity>> {
     return this.chooseOrderHandler(orderStatus);
   }
 }
+
+export const OrderStrategyProvider = ProviderMaker.make(
+  IOrderStrategy,
+  OrderStrategy,
+);
