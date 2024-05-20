@@ -47,7 +47,7 @@ export class OrdersApi {
     return this.ordersController.findAllOpen();
   }
 
-  @Get(':status')
+  @Get('/status/:status')
   @ApiOperation({ summary: 'return all orders created by status' })
   findAllByStatus(@Param('status') status: OrderStatus) {
     return this.ordersService.findAllByStatus(status);

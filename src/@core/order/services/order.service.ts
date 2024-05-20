@@ -53,6 +53,7 @@ export class OrderService implements IOrderService {
   async findOne(id: string) {
     const result = await this.ordersRepository.findById(id);
     if (!result) return new ResultError('order not exist');
+    result.items = await this.orderItemRepository.findByOrderId(id);
     return new ResultSuccess(result);
   }
 

@@ -15,12 +15,12 @@ export class OrderItemRepository implements IOrderItemRepository {
     return result as unknown as OrderItemEntity[];
   }
 
-  async findByOrderId(id: string): Promise<OrderItemEntity> {
+  async findByOrderId(id: string): Promise<OrderItemEntity[]> {
     const result = await this.prisma.orderItems.findMany({
       where: {
         orderId: id,
       },
     });
-    return result as unknown as OrderItemEntity;
+    return result as unknown as OrderItemEntity[];
   }
 }

@@ -3,7 +3,6 @@ import { OrderEntity } from '../../entitites/order.entity';
 import { ProviderMaker } from '../../../application/utils/provider-maker';
 import { ApplicationResult } from '../../../application/application-result/application-result';
 import { IOrderService } from '../order-service.interface';
-import { OrderStatus } from '../../enums/order-status.enum';
 import { ResultStatus } from '../../../application/result/result-status';
 import { UpdateOrderApplicationResultError } from '../../../application/application-result-error/update-order-error';
 import { UpdateOrderApplicationResultSuccess } from '../../../application/application-result-success/update-order-success';
