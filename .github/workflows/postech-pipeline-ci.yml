@@ -6,9 +6,22 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+    inputs:
+      database_create:
+        description: 'Trigger database creation pipeline'
+        required: false 
 
 jobs:
-  call-workflow-branch-ref:
-    if: github.event_name == 'push' && github.ref == 'dev-fiap-001' || github.event_name == 'pull_request' && github.base_ref == 'main'
-    uses: tshadz-fiap-postech-soat3/ci-pipeline/.github/workflows/ci-pipeline.yml@dev-fiap-001
-    secrets: inherit
+  call_ci_pipeline:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: CI-Pipeline - Continuous Integration
+        uses: tshadz-fiap-postech-soat3/ci-pipeline/.github/workflows/ci-pipeline.yml@main
+
+  call_database_creation_pipeline:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_dispatch' || github.event.inputs.database_create
+    steps:
+      - name: Trigger Database Creation Pipeline
+        uses: tshadz-fiap-postech-soat3/terraform-database/.github/workflows/terraform-plan-pipeline-ci.yml@main
