@@ -2,23 +2,41 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { PrismaService } from './external/driven/infra/database/prisma.service';
 import { AppModule } from './app.module';
+import { execSync } from 'child_process';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const prismaService = app.get(PrismaService);
+  const logger = new Logger('Bootstrap');
 
-  app.enableCors();
+  try {
+    // Executa as migrações do Prisma
+    logger.log('Running Prisma migrations...');
+    execSync('npx prisma migrate dev --name init', { stdio: 'inherit' });
 
-  const config = new DocumentBuilder()
-    .setTitle('Fast Food')
-    .setDescription('Api to handle a fastfood service')
-    .setVersion('1.0.0')
-    .build();
+    // Executa o script de seed do Prisma
+    logger.log('Running Prisma seed script...');
+    execSync('npx ts-node prisma/seed.ts', { stdio: 'inherit' });
 
-  const document = SwaggerModule.createDocument(app, config);
+    // Inicia o servidor Nest.js
+    app.enableCors();
 
-  SwaggerModule.setup('swagger', app, document);
+    const config = new DocumentBuilder()
+      .setTitle('Fast Food')
+      .setDescription('Api to handle a fastfood service')
+      .setVersion('1.0.0')
+      .build();
 
-  await app.listen(process.env.PORT ?? 8080);
+    const document = SwaggerModule.createDocument(app, config);
+
+    SwaggerModule.setup('swagger', app, document);
+
+    await app.listen(process.env.PORT ?? 8080);
+    logger.log('Application started successfully');
+  } catch (error) {
+    logger.error('Error starting application', error);
+    process.exit(1);
+  }
 }
 bootstrap();
