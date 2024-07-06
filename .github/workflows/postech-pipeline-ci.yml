@@ -13,15 +13,9 @@ on:
 
 jobs:
   call_ci_pipeline:
-    runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - name: CI-Pipeline - Continuous Integration
-        uses: tshadz-fiap-postech-soat3/ci-pipeline/.github/workflows/ci-pipeline.yml@main
+    uses: tshadz-fiap-postech-soat3/ci-pipeline/.github/workflows/ci-pipeline.yml@main
 
   call_database_creation_pipeline:
-    runs-on: ubuntu-latest
     if: github.event_name != 'workflow_dispatch' && github.event.inputs.database_create == 'true'
-    steps:
-      - name: Trigger Database Creation Pipeline
-        uses: tshadz-fiap-postech-soat3/terraform-database/.github/workflows/terraform-plan-pipeline-ci.yml@main
+    uses: tshadz-fiap-postech-soat3/terraform-database/.github/workflows/terraform-plan-pipeline-ci.yml@main
