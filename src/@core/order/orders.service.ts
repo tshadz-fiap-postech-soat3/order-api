@@ -6,13 +6,14 @@ import { OrderStatus } from './entitites/order';
 import { IOrdersService } from './iorders.service';
 import { ResultError } from '../application/result/result-error';
 import { ResultSuccess } from '../application/result/result-success';
-
+import { PubSubClient } from '../../external/driven/infra/pubsub/pubsub.client';
 
 @Injectable()
 export class OrdersService implements IOrdersService {
   constructor(
     @Inject(IOrdersRepository)
     private ordersRepository: IOrdersRepository,
+    private readonly pubSubClient: PubSubClient,
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {
@@ -20,6 +21,10 @@ export class OrdersService implements IOrdersService {
     if (!result) {
       return new ResultError('Not able to create the order');
     }
+
+    // Publicar mensagem no Pub/Sub
+    await this.pubSubClient.publishMessage('order-topic', result);
+
     return new ResultSuccess(result);
   }
 

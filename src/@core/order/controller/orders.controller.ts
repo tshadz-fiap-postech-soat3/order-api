@@ -16,7 +16,6 @@ export class OrdersController implements IOrdersController {
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {
-
     const createdOrder = await this.ordersService.create(createOrderDto);
     if (createdOrder.status === ResultStatus.ERROR) {
       return new ApplicationResult(
