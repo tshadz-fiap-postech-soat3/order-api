@@ -13,9 +13,13 @@ on:
 
 jobs:
   call_ci_pipeline:
+    name: CI-Pipeline - Continuous Integration
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     uses: tshadz-fiap-postech-soat3/ci-pipeline/.github/workflows/ci-pipeline.yml@main
+    secrets: inherit
 
   call_database_creation_pipeline:
+    name: Database Deploy
     if: github.event_name != 'workflow_dispatch' && github.event.inputs.database_create == 'true'
     uses: tshadz-fiap-postech-soat3/terraform-database/.github/workflows/terraform-plan-pipeline-ci.yml@main
+    secrets: inherit
