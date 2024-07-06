@@ -13,7 +13,6 @@ RUN npm install
 COPY --chown=node:node . .
 RUN npx prisma generate
 RUN npm run build
-RUN npx prisma migrate dev --name init && npx ts-node prisma/seed.ts
 
 FROM base AS test
 ENTRYPOINT ["npm", "test" ]
