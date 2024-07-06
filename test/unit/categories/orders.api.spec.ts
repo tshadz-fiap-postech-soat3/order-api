@@ -7,6 +7,7 @@ import { PrismaService } from '../../../src/external/driven/infra/database/prism
 import { OrdersController } from '../../../src/@core/order/controller/orders.controller';
 import { IOrdersService } from '../../../src/@core/order/iorders.service';
 import { IOrdersController } from '../../../src/@core/order/controller/iorders-controller';
+import { PubSubClient } from '../../../src/external/driven/infra/pubsub/pubsub.client';
 
 describe('OrdersApi', () => {
   let controller: OrdersApi;
@@ -28,6 +29,7 @@ describe('OrdersApi', () => {
           useClass: PrismaOrdersRepository,
         },
         PrismaService,
+        PubSubClient,
       ],
     }).compile();
 

@@ -7,6 +7,7 @@ import { OrdersApi } from '../../external/driver/orders.api';
 import { IOrdersService } from './iorders.service';
 import { IOrdersController } from './controller/iorders-controller';
 import { OrdersController } from './controller/orders.controller';
+import { PubSubClient } from '../../external/driven/infra/pubsub/pubsub.client';
 
 @Module({
   controllers: [OrdersApi],
@@ -27,6 +28,7 @@ import { OrdersController } from './controller/orders.controller';
       useClass: OrdersController,
     },
     PrismaService,
+    PubSubClient,
   ],
 })
 export class OrdersModule {}

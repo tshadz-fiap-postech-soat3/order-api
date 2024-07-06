@@ -3,6 +3,7 @@ import { IOrdersRepository } from '../../../src/@core/order/repositories/iorder.
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
 import { PrismaOrdersRepository } from '../../../src/@core/order/repositories/prisma-orders-repository';
 import { OrdersService } from '../../../src/@core/order/orders.service';
+import { PubSubClient } from '../../../src/external/driven/infra/pubsub/pubsub.client';
 
 describe('OrdersService', () => {
   let service: OrdersService;
@@ -15,6 +16,7 @@ describe('OrdersService', () => {
           provide: IOrdersRepository,
           useClass: PrismaOrdersRepository,
         },
+        PubSubClient,
         PrismaService,
       ],
     }).compile();
