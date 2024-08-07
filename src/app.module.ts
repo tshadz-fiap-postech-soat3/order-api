@@ -1,18 +1,11 @@
-import { Controller, Get, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { OrderModule } from './@core/order/order.module';
 import { ConfigModule } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-
-@Controller('/health')
-class HealthCheckerController {
-  @Get('/check')
-  async healthCheck(): Promise<string> {
-    return 'App running';
-  }
-}
+import { HealthController } from './health.controller';
 
 @Module({
-  controllers: [HealthCheckerController],
+  controllers: [HealthController],
   imports: [ConfigModule.forRoot(), EventEmitterModule.forRoot(), OrderModule],
 })
 export class AppModule {}
