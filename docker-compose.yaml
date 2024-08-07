@@ -10,9 +10,7 @@ services:
     build:
       context: '.'
       dockerfile: Dockerfile
-    container_name: fast-food
-    env_file:
-      - .env
+    container_name: ${IMAGE_NAME}
     ports:
       - '8080:8080'
     restart: 'always'
@@ -30,11 +28,9 @@ services:
 
   db:
     image: mysql:latest
-    container_name: fast-food-db
+    container_name: ${IMAGE_NAME}-db
     restart: always
     tty: true
-    env_file:
-      - .env
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       timeout: 3s
