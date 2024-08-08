@@ -4,7 +4,7 @@ import { OrderItemsService } from '../../../src/@core/order-item/order-items.ser
 import { PrismaService } from '../../../src/external/driven/infra/database/prisma.service';
 import { IOrderItemsRepository } from '../../../src/@core/order-item/repositories/iorder-items.repository';
 import { PrismaOrderItemsRepository } from '../../../src/@core/order-item/repositories/prisma-order-items-repository';
-import { OrderItemsController } from '../../../src/@core/order-item/controllers/order-item.controllers';
+import { OrderItemsController } from '../../../src/@core/order-item/consumers/order-item.consumers';
 import { IOrderItemsService } from '../../../src/@core/order-item/iorderItems.service';
 
 describe('OrderItemsApi', () => {

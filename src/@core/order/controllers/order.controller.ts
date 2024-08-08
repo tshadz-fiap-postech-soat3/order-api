@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ApplicationResult } from '../../application/application-result/application-result';
 import { ApplicationResultEvents } from '../../application/application-result/application-result-events';
 import { ResultStatus } from '../../application/result/result-status';
@@ -21,6 +21,11 @@ import {
 } from '../dtos/calculate-order.dto';
 import { CalculateOrderApplicationSuccess } from '../../application/application-result-success/calculate-order-response';
 import { IOrderStrategy } from '../../application/contracts/order.strategy';
+import { ClientProxy } from '@nestjs/microservices';
+import {
+  PROCESS_PAYMENT_QUEUE,
+  ProcessPaymentContract,
+} from '../../_shared/contracts/process-payment.contract';
 
 @Injectable()
 export class OrderController implements IOrderController {
@@ -31,22 +36,35 @@ export class OrderController implements IOrderController {
       OrderEntity,
       ApplicationResult<string | OrderEntity>
     >,
+    @Inject('RABBITMQ_SERVICE') private readonly client: ClientProxy,
   ) {}
 
   async create(
     createOrderDto: CreateOrderDto,
   ): Promise<ApplicationResult<string | OrderEntity>> {
     const calculatedOrder = await this.calculateOrder(createOrderDto);
-    const insertDto = this.mapInsertDto(
-      createOrderDto,
-      calculatedOrder.message as CalculateOrderResponseDto,
+
+    // process payment
+    const processPayment: ProcessPaymentContract = { orderId: '123' };
+    this.client.emit(PROCESS_PAYMENT_QUEUE, processPayment);
+
+    const createdOrder = await this.orderService.create(
+      this.mapInsertDto(
+        createOrderDto,
+        calculatedOrder.message as CalculateOrderResponseDto,
+      ),
     );
-    const createdOrder = await this.orderService.create(insertDto);
+
     if (createdOrder.status === ResultStatus.ERROR)
       return new CreateOrderApplicationResultError();
     return new CreateOrderApplicationResultSuccess(createdOrder.data);
   }
 
+  async confirmOrderPayment(): Promise<
+    ApplicationResult<string | OrderEntity>
+  > {
+    return new CreateOrderApplicationResultError();
+  }
   private mapInsertDto(
     createOrderDto: CreateOrderDto,
     calculatedOrder: CalculateOrderResponseDto,
