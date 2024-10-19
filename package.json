@@ -29,7 +29,7 @@
     "@nestjs/cqrs": "^10.2.6",
     "@nestjs/event-emitter": "^2.0.4",
     "@nestjs/mapped-types": "*",
-    "@nestjs/platform-express": "^10.3.10",
+    "@nestjs/platform-express": "^10.4.5",
     "@nestjs/swagger": "^7.1.12",
     "@prisma/client": "^5.5.2",
     "helmet": "^7.1.0",
